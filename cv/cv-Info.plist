@@ -30,6 +30,10 @@
 	<string>MainWindow</string>
 	<key>NSMainNibFile~ipad</key>
 	<string>MainWindow-iPad</string>
+	<key>UIRequiredDeviceCapabilities</key>
+	<array>
+		<string>still-camera</string>
+	</array>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>

@@ -16,7 +16,7 @@
 		14311BFA1361788700C0C593 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 14311BF81361788700C0C593 /* MainWindow.xib */; };
 		14311BFD1361788700C0C593 /* cvViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14311BFC1361788700C0C593 /* cvViewController.m */; };
 		14311C001361788700C0C593 /* cvViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 14311BFE1361788700C0C593 /* cvViewController.xib */; };
-		14311C09136178AE00C0C593 /* MainWindow-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 14311C07136178AE00C0C593 /* MainWindow-iPad.xib */; };
+		14311C1D13617C2300C0C593 /* MainWindow-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 14311C1B13617C2300C0C593 /* MainWindow-iPad.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,7 +34,7 @@
 		14311BFB1361788700C0C593 /* cvViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = cvViewController.h; sourceTree = "<group>"; };
 		14311BFC1361788700C0C593 /* cvViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = cvViewController.m; sourceTree = "<group>"; };
 		14311BFF1361788700C0C593 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/cvViewController.xib; sourceTree = "<group>"; };
-		14311C08136178AE00C0C593 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = "iPad/en.lproj/MainWindow-iPad.xib"; sourceTree = "<group>"; };
+		14311C1C13617C2300C0C593 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = "en.lproj/MainWindow-iPad.xib"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,13 +81,10 @@
 		14311BEC1361788700C0C593 /* cv */ = {
 			isa = PBXGroup;
 			children = (
-				14311C06136178AD00C0C593 /* iPad */,
 				14311BF51361788700C0C593 /* cvAppDelegate.h */,
 				14311BF61361788700C0C593 /* cvAppDelegate.m */,
-				14311BF81361788700C0C593 /* MainWindow.xib */,
 				14311BFB1361788700C0C593 /* cvViewController.h */,
 				14311BFC1361788700C0C593 /* cvViewController.m */,
-				14311BFE1361788700C0C593 /* cvViewController.xib */,
 				14311BED1361788700C0C593 /* Supporting Files */,
 			);
 			path = cv;
@@ -96,20 +93,15 @@
 		14311BED1361788700C0C593 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				14311C1B13617C2300C0C593 /* MainWindow-iPad.xib */,
+				14311BF81361788700C0C593 /* MainWindow.xib */,
+				14311BFE1361788700C0C593 /* cvViewController.xib */,
 				14311BEE1361788700C0C593 /* cv-Info.plist */,
 				14311BEF1361788700C0C593 /* InfoPlist.strings */,
 				14311BF21361788700C0C593 /* cv-Prefix.pch */,
 				14311BF31361788700C0C593 /* main.m */,
 			);
 			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		14311C06136178AD00C0C593 /* iPad */ = {
-			isa = PBXGroup;
-			children = (
-				14311C07136178AE00C0C593 /* MainWindow-iPad.xib */,
-			);
-			name = iPad;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -162,7 +154,7 @@
 				14311BF11361788700C0C593 /* InfoPlist.strings in Resources */,
 				14311BFA1361788700C0C593 /* MainWindow.xib in Resources */,
 				14311C001361788700C0C593 /* cvViewController.xib in Resources */,
-				14311C09136178AE00C0C593 /* MainWindow-iPad.xib in Resources */,
+				14311C1D13617C2300C0C593 /* MainWindow-iPad.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -206,10 +198,10 @@
 			name = cvViewController.xib;
 			sourceTree = "<group>";
 		};
-		14311C07136178AE00C0C593 /* MainWindow-iPad.xib */ = {
+		14311C1B13617C2300C0C593 /* MainWindow-iPad.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				14311C08136178AE00C0C593 /* en */,
+				14311C1C13617C2300C0C593 /* en */,
 			);
 			name = "MainWindow-iPad.xib";
 			sourceTree = "<group>";
@@ -300,6 +292,7 @@
 				14311C051361788700C0C593 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
