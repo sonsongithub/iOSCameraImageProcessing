@@ -22,10 +22,18 @@
 	<string>1.0</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
+	<key>UIPrerenderedIcon</key>
+	<true/>
 	<key>CFBundleVersion</key>
 	<string>1.0</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>CFBundleIconFiles</key>
+	<array>
+		<string>icon57x57.png</string>
+		<string>icon114x114.png</string>
+		<string>icon72x72.png</string>
+	</array>
 	<key>NSMainNibFile</key>
 	<string>MainWindow</string>
 	<key>NSMainNibFile~ipad</key>

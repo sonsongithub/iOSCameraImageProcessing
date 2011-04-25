@@ -284,12 +284,12 @@ double _tocp() {
 	// this is magical code
 	// if you want to remove session object and preview layer, you have to wait some minitunes like following code.
 	// maybe, this is bug.
-//	while ([session isRunning]) {
-//		NSLog(@"waiting...");
-//		[session stopRunning];
-//		[NSThread sleepForTimeInterval:0.1];
-//	}
-//	[previewLayer removeFromSuperlayer];
+	while ([session isRunning]) {
+		NSLog(@"waiting...");
+		[session stopRunning];
+		[NSThread sleepForTimeInterval:0.1];
+	}
+	[previewLayer removeFromSuperlayer];
 }
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {

@@ -20,6 +20,9 @@
 		1443574013650BBF004CC7AA /* MyCameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1443573F13650BBF004CC7AA /* MyCameraViewController.m */; };
 		14975FC613653CBA00F41B08 /* QuartzHelpLibrary.m in Sources */ = {isa = PBXBuildFile; fileRef = 14975FC313653CBA00F41B08 /* QuartzHelpLibrary.m */; };
 		14975FC713653CBA00F41B08 /* UIImage+pixel.m in Sources */ = {isa = PBXBuildFile; fileRef = 14975FC513653CBA00F41B08 /* UIImage+pixel.m */; };
+		14B377941365BD6200738C9C /* icon114x114.png in Resources */ = {isa = PBXBuildFile; fileRef = 14B377911365BD6200738C9C /* icon114x114.png */; };
+		14B377951365BD6200738C9C /* icon57x57.png in Resources */ = {isa = PBXBuildFile; fileRef = 14B377921365BD6200738C9C /* icon57x57.png */; };
+		14B377961365BD6200738C9C /* icon72x72.png in Resources */ = {isa = PBXBuildFile; fileRef = 14B377931365BD6200738C9C /* icon72x72.png */; };
 		14C856181362C99E00968679 /* CameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14C856171362C99E00968679 /* CameraViewController.m */; };
 		14C856251362DF7000968679 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14C856231362DF7000968679 /* CoreMedia.framework */; };
 		14C856261362DF7000968679 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14C856241362DF7000968679 /* CoreVideo.framework */; };
@@ -49,6 +52,9 @@
 		14975FC313653CBA00F41B08 /* QuartzHelpLibrary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QuartzHelpLibrary.m; path = "../../Quartz-Help-Library/QuartzHelpLibrary.m"; sourceTree = "<group>"; };
 		14975FC413653CBA00F41B08 /* UIImage+pixel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+pixel.h"; path = "../../Quartz-Help-Library/UIImage+pixel.h"; sourceTree = "<group>"; };
 		14975FC513653CBA00F41B08 /* UIImage+pixel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+pixel.m"; path = "../../Quartz-Help-Library/UIImage+pixel.m"; sourceTree = "<group>"; };
+		14B377911365BD6200738C9C /* icon114x114.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon114x114.png; sourceTree = "<group>"; };
+		14B377921365BD6200738C9C /* icon57x57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon57x57.png; sourceTree = "<group>"; };
+		14B377931365BD6200738C9C /* icon72x72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon72x72.png; sourceTree = "<group>"; };
 		14C856161362C99E00968679 /* CameraViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraViewController.h; sourceTree = "<group>"; };
 		14C856171362C99E00968679 /* CameraViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CameraViewController.m; sourceTree = "<group>"; };
 		14C856221362DF7000968679 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -121,6 +127,7 @@
 				14311BFB1361788700C0C593 /* cvViewController.h */,
 				14311BFC1361788700C0C593 /* cvViewController.m */,
 				14311BED1361788700C0C593 /* Supporting Files */,
+				14B3778F1365BD6200738C9C /* Resources */,
 			);
 			path = cv;
 			sourceTree = "<group>";
@@ -148,6 +155,24 @@
 				14975FC513653CBA00F41B08 /* UIImage+pixel.m */,
 			);
 			name = "Quartz Help Library";
+			sourceTree = "<group>";
+		};
+		14B3778F1365BD6200738C9C /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				14B377901365BD6200738C9C /* image */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		14B377901365BD6200738C9C /* image */ = {
+			isa = PBXGroup;
+			children = (
+				14B377911365BD6200738C9C /* icon114x114.png */,
+				14B377921365BD6200738C9C /* icon57x57.png */,
+				14B377931365BD6200738C9C /* icon72x72.png */,
+			);
+			path = image;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -201,6 +226,9 @@
 				14311BFA1361788700C0C593 /* MainWindow.xib in Resources */,
 				14311C001361788700C0C593 /* cvViewController.xib in Resources */,
 				14311C1D13617C2300C0C593 /* MainWindow-iPad.xib in Resources */,
+				14B377941365BD6200738C9C /* icon114x114.png in Resources */,
+				14B377951365BD6200738C9C /* icon57x57.png in Resources */,
+				14B377961365BD6200738C9C /* icon72x72.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

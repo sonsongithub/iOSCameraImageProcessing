@@ -35,7 +35,16 @@
 
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
-
+	
+	// alloc buffer
+	binarizedPixels = (unsigned char*)malloc(sizeof(unsigned char) * (int)self.bufferSize.width * (int)self.bufferSize.height);
+	
+	// fit to view
+	float ratio = self.bufferSize.width / self.bufferSize.height;
+	binarizedImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, (int)self.view.frame.size.width, (int)self.view.frame.size.width * ratio)];
+	[self.view addSubview:binarizedImageView];
+	[binarizedImageView release];
+	
 	// add toolbar
 	UIToolbar *bar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 44, self.view.frame.size.width, 44)];
 	[self.view addSubview:bar];
@@ -45,11 +54,6 @@
 	[bar setItems:[NSArray arrayWithObject:closeButton]];
 	
 	[self setDelegate:self];
-	
-	binarizedPixels = (unsigned char*)malloc(sizeof(unsigned char) * (int)self.bufferSize.width * (int)self.bufferSize.height);
-	binarizedImageView = [[UIImageView alloc] initWithFrame:self.view.bounds];
-	[self.view addSubview:binarizedImageView];
-	[binarizedImageView release];
 }
 
 - (void)didUpdateBufferCameraViewController:(CameraViewController*)CameraViewController {
