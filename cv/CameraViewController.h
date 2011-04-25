@@ -13,5 +13,6 @@
 @interface CameraViewController : UIViewController <AVCaptureVideoDataOutputSampleBufferDelegate> {
 	AVCaptureSession				*session;
 	AVCaptureVideoPreviewLayer		*previewLayer;
+	float							aspectRatio;
 }
 @end

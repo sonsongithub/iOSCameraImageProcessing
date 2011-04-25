@@ -12,6 +12,9 @@
 @implementation CameraViewController
 
 - (void)initCamera {
+	// set background color
+	[self.view setBackgroundColor:[UIColor blackColor]];
+	
 	NSError *error = nil;
 	
 	// make capture session
@@ -36,8 +39,15 @@
 	[session beginConfiguration];
 	[session addInput:videoInput];
 	[session addOutput:videoDataOutput];
-	[session setSessionPreset:AVCaptureSessionPreset1280x720];
+	[session setSessionPreset:AVCaptureSessionPreset640x480];
 	[session commitConfiguration];
+	
+	if ([session.sessionPreset isEqualToString:AVCaptureSessionPreset1280x720]) {
+		aspectRatio = 16.0 / 9.0;
+	}
+	else {
+		aspectRatio = 4.0 / 3.0;
+	}
 	
 	// setting preview layer
 	previewLayer = [AVCaptureVideoPreviewLayer layerWithSession:session];
@@ -48,7 +58,7 @@
 
 - (void)captureOutput:(AVCaptureOutput *)captureOutput didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer fromConnection:(AVCaptureConnection *)connection {
 	if ([session isRunning]) {
-		CVImageBufferRef imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
+//		CVImageBufferRef imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
 	}
 }
 
@@ -69,17 +79,8 @@
     return self;
 }
 
-- (void)dealloc
-{
-    [super dealloc];
-}
-
-- (void)didReceiveMemoryWarning
-{
-    // Releases the view if it doesn't have a superview.
+- (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    
-    // Release any cached data, images, etc that aren't in use.
 }
 
 #pragma mark - View lifecycle
@@ -88,7 +89,7 @@
 	[super viewWillAppear:animated];
 	
 	float width = self.view.frame.size.width;
-	float height = self.view.frame.size.width / 9.0 * 16.0;
+	float height = self.view.frame.size.width * aspectRatio;
 	
 	previewLayer.frame = CGRectMake(0, 0, width, height);
 	[self.view.layer addSublayer:previewLayer];
@@ -107,53 +108,50 @@
 		case UIInterfaceOrientationLandscapeLeft:
 			m = CATransform3DMakeTranslation(offsetx, offsety, 0);
 			m = CATransform3DRotate(m, M_PI/2, 0, 0, 1);
-			previewLayer.transform = m;
 			break;
 		case UIInterfaceOrientationLandscapeRight:
 			m = CATransform3DMakeTranslation(offsetx, offsety, 0);
-			m = CATransform3DRotate(m, 3*M_PI/2, 0, 0, 1);
-			previewLayer.transform = m;
+			m = CATransform3DRotate(m, 3 * M_PI/2, 0, 0, 1);
 			break;
 		case UIInterfaceOrientationPortrait:
 			m = CATransform3DMakeTranslation(0, -2, 0);
 			m = CATransform3DRotate(m, 0, 0, 0, 1);
-			previewLayer.transform = m;
 			break;
 		case UIInterfaceOrientationPortraitUpsideDown:
 			m = CATransform3DMakeTranslation(0, -2, 0);
 			m = CATransform3DRotate(m, M_PI, 0, 0, 1);
-			previewLayer.transform = m;
+			break;
+		default:
+			m = CATransform3DMakeTranslation(0, -2, 0);
+			m = CATransform3DRotate(m, 0, 0, 0, 1);
 			break;
 	}
-
-}
-
-- (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation {
-
-}
-
-- (void)viewDidAppear:(BOOL)animated {
-	[super viewDidAppear:animated];
 	
+	previewLayer.transform = m;
 }
 
-// Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
 }
 
-- (void)viewDidUnload
-{
+- (void)viewDidUnload {
     [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
 }
 
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    // Return YES for supported orientations
-    return YES;//(interfaceOrientation == UIInterfaceOrientationPortrait);
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
+	// defulat settings.
+	// return (interfaceOrientation == UIInterfaceOrientationPortrait);
+    return YES;
+}
+
+- (void)dealloc {
+	[previewLayer removeFromSuperlayer];
+	[previewLayer release];
+	previewLayer = nil;
+	[session stopRunning];
+	[session release];
+	session = nil;
+    [super dealloc];
 }
 
 @end
