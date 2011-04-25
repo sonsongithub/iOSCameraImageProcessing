@@ -29,6 +29,7 @@
  */
 
 #import "MyCameraViewController.h"
+#import "QuartzHelpLibrary.h"
 
 @implementation MyCameraViewController
 
@@ -44,13 +45,34 @@
 	[bar setItems:[NSArray arrayWithObject:closeButton]];
 	
 	[self setDelegate:self];
+	
+	binarizedPixels = (unsigned char*)malloc(sizeof(unsigned char) * 640 * 480);
+	binarizedImageView = [[UIImageView alloc] initWithFrame:self.view.bounds];
+	[self.view addSubview:binarizedImageView];
 }
 
 - (void)didUpdateBufferCameraViewController:(CameraViewController*)CameraViewController {
+	int width = 480;
+	int height = 640;
+	int threshold = 120;
+	for (int y = 0; y < height; y++) {
+		for (int x = 0; x < width; x++) {
+			binarizedPixels[y * width + x] = buffer[(width - 1 - x) * height + y] > threshold ? 255 : 0;
+		}
+	}
+	CGImageRef 
+	imageRef = CGImageGrayColorCreateWithGrayPixelBuffer(binarizedPixels, width, height);
+	[binarizedImageView setImage:[UIImage imageWithCGImage:imageRef]];
+	CGImageRelease(imageRef);
 }
 
 - (void)close:(id)sender {
 	[self dismissModalViewControllerAnimated:YES];
+}
+
+- (void)dealloc {
+    free(binarizedPixels);
+    [super dealloc];
 }
 
 @end

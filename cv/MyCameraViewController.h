@@ -31,7 +31,8 @@
 #import "CameraViewController.h"
 
 @interface MyCameraViewController : CameraViewController <CameraViewControllerDelegate> {
-    
+	UIImageView *binarizedImageView;
+	unsigned char *binarizedPixels;
 }
 
 @end

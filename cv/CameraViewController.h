@@ -32,8 +32,6 @@
 #import <AVFoundation/AVFoundation.h>
 #import <CoreGraphics/CoreGraphics.h>
 
-#define CameraViewControllerSizeMask 8 < 8;
-
 typedef enum {
 	BufferTypeMask	= 0x0f,
 	BufferGrayColor	= 0,
@@ -42,10 +40,10 @@ typedef enum {
 
 typedef enum {
 	BufferSizeMask		= 0xf0,
-	BufferSize1280x720	= 0 << 8,
-	BufferSize640x480	= 1 << 8,
-	BufferSize480x360	= 2 << 8,
-	BufferSize192x144	= 3 << 8,
+	BufferSize1280x720	= 0 << 4,
+	BufferSize640x480	= 1 << 4,
+	BufferSize480x360	= 2 << 4,
+	BufferSize192x144	= 3 << 4,
 }CameraViewControllerSize;
 
 @class CameraViewController;

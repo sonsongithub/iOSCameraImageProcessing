@@ -18,6 +18,8 @@
 		14311C001361788700C0C593 /* cvViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 14311BFE1361788700C0C593 /* cvViewController.xib */; };
 		14311C1D13617C2300C0C593 /* MainWindow-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 14311C1B13617C2300C0C593 /* MainWindow-iPad.xib */; };
 		1443574013650BBF004CC7AA /* MyCameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1443573F13650BBF004CC7AA /* MyCameraViewController.m */; };
+		14975FC613653CBA00F41B08 /* QuartzHelpLibrary.m in Sources */ = {isa = PBXBuildFile; fileRef = 14975FC313653CBA00F41B08 /* QuartzHelpLibrary.m */; };
+		14975FC713653CBA00F41B08 /* UIImage+pixel.m in Sources */ = {isa = PBXBuildFile; fileRef = 14975FC513653CBA00F41B08 /* UIImage+pixel.m */; };
 		14C856181362C99E00968679 /* CameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14C856171362C99E00968679 /* CameraViewController.m */; };
 		14C856251362DF7000968679 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14C856231362DF7000968679 /* CoreMedia.framework */; };
 		14C856261362DF7000968679 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14C856241362DF7000968679 /* CoreVideo.framework */; };
@@ -43,6 +45,10 @@
 		14311C1C13617C2300C0C593 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = "en.lproj/MainWindow-iPad.xib"; sourceTree = "<group>"; };
 		1443573E13650BBF004CC7AA /* MyCameraViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyCameraViewController.h; sourceTree = "<group>"; };
 		1443573F13650BBF004CC7AA /* MyCameraViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyCameraViewController.m; sourceTree = "<group>"; };
+		14975FC213653CBA00F41B08 /* QuartzHelpLibrary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QuartzHelpLibrary.h; path = "../../Quartz-Help-Library/QuartzHelpLibrary.h"; sourceTree = "<group>"; };
+		14975FC313653CBA00F41B08 /* QuartzHelpLibrary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QuartzHelpLibrary.m; path = "../../Quartz-Help-Library/QuartzHelpLibrary.m"; sourceTree = "<group>"; };
+		14975FC413653CBA00F41B08 /* UIImage+pixel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+pixel.h"; path = "../../Quartz-Help-Library/UIImage+pixel.h"; sourceTree = "<group>"; };
+		14975FC513653CBA00F41B08 /* UIImage+pixel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+pixel.m"; path = "../../Quartz-Help-Library/UIImage+pixel.m"; sourceTree = "<group>"; };
 		14C856161362C99E00968679 /* CameraViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraViewController.h; sourceTree = "<group>"; };
 		14C856171362C99E00968679 /* CameraViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CameraViewController.m; sourceTree = "<group>"; };
 		14C856221362DF7000968679 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -73,7 +79,6 @@
 		14311BD71361788700C0C593 = {
 			isa = PBXGroup;
 			children = (
-				14C85629136341F600968679 /* QuartzCore.framework */,
 				14311BEC1361788700C0C593 /* cv */,
 				14311BE51361788700C0C593 /* Frameworks */,
 				14311BE31361788700C0C593 /* Products */,
@@ -91,6 +96,7 @@
 		14311BE51361788700C0C593 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				14C85629136341F600968679 /* QuartzCore.framework */,
 				14C8562713630B2400968679 /* AVFoundation.framework */,
 				14C856221362DF7000968679 /* CoreGraphics.framework */,
 				14C856231362DF7000968679 /* CoreMedia.framework */,
@@ -105,6 +111,7 @@
 		14311BEC1361788700C0C593 /* cv */ = {
 			isa = PBXGroup;
 			children = (
+				14975FC813654A1300F41B08 /* Quartz Help Library */,
 				14C856161362C99E00968679 /* CameraViewController.h */,
 				14C856171362C99E00968679 /* CameraViewController.m */,
 				1443573E13650BBF004CC7AA /* MyCameraViewController.h */,
@@ -130,6 +137,17 @@
 				14311BF31361788700C0C593 /* main.m */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		14975FC813654A1300F41B08 /* Quartz Help Library */ = {
+			isa = PBXGroup;
+			children = (
+				14975FC213653CBA00F41B08 /* QuartzHelpLibrary.h */,
+				14975FC313653CBA00F41B08 /* QuartzHelpLibrary.m */,
+				14975FC413653CBA00F41B08 /* UIImage+pixel.h */,
+				14975FC513653CBA00F41B08 /* UIImage+pixel.m */,
+			);
+			name = "Quartz Help Library";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -198,6 +216,8 @@
 				14311BFD1361788700C0C593 /* cvViewController.m in Sources */,
 				14C856181362C99E00968679 /* CameraViewController.m in Sources */,
 				1443574013650BBF004CC7AA /* MyCameraViewController.m in Sources */,
+				14975FC613653CBA00F41B08 /* QuartzHelpLibrary.m in Sources */,
+				14975FC713653CBA00F41B08 /* UIImage+pixel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

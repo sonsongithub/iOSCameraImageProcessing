@@ -260,9 +260,9 @@
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-	// defulat settings.
-	// return (interfaceOrientation == UIInterfaceOrientationPortrait);
-    return YES;
+	return (interfaceOrientation == UIInterfaceOrientationPortrait);
+	// for orientation test
+	//return YES;
 }
 
 - (void)dealloc {
