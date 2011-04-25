@@ -53,6 +53,7 @@ typedef enum {
 @end
 
 @interface CameraViewController : UIViewController <AVCaptureVideoDataOutputSampleBufferDelegate> {
+	CGSize							bufferSize;
 	unsigned char					*buffer;
 	AVCaptureSession				*session;
 	AVCaptureVideoPreviewLayer		*previewLayer;
@@ -61,5 +62,6 @@ typedef enum {
 	id<CameraViewControllerDelegate>delegate;
 }
 - (id)initWithCameraViewControllerType:(CameraViewControllerType)value;
+@property (nonatomic, readonly) CGSize bufferSize;
 @property (nonatomic, assign) id <CameraViewControllerDelegate> delegate;
 @end

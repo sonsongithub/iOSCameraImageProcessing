@@ -46,22 +46,27 @@
 	
 	[self setDelegate:self];
 	
-	binarizedPixels = (unsigned char*)malloc(sizeof(unsigned char) * 640 * 480);
+	binarizedPixels = (unsigned char*)malloc(sizeof(unsigned char) * (int)self.bufferSize.width * (int)self.bufferSize.height);
 	binarizedImageView = [[UIImageView alloc] initWithFrame:self.view.bounds];
 	[self.view addSubview:binarizedImageView];
+	[binarizedImageView release];
 }
 
 - (void)didUpdateBufferCameraViewController:(CameraViewController*)CameraViewController {
-	int width = 480;
-	int height = 640;
+	// Rotate pixel array in order to display it on this view controller's view.
+	int width = self.bufferSize.height;
+	int height = self.bufferSize.width;
 	int threshold = 120;
 	for (int y = 0; y < height; y++) {
 		for (int x = 0; x < width; x++) {
 			binarizedPixels[y * width + x] = buffer[(width - 1 - x) * height + y] > threshold ? 255 : 0;
 		}
 	}
-	CGImageRef 
-	imageRef = CGImageGrayColorCreateWithGrayPixelBuffer(binarizedPixels, width, height);
+	
+	// Make CGImage from pixel array, with Quartz Help Library
+	CGImageRef imageRef = CGImageGrayColorCreateWithGrayPixelBuffer(binarizedPixels, width, height);
+	
+	// Update UIImageView with CGImageRef
 	[binarizedImageView setImage:[UIImage imageWithCGImage:imageRef]];
 	CGImageRelease(imageRef);
 }

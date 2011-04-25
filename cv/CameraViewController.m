@@ -32,7 +32,7 @@
 
 @implementation CameraViewController
 
-@synthesize delegate;
+@synthesize delegate, bufferSize;
 
 - (void)prepareWithCameraViewControllerType:(CameraViewControllerType)value {
 	//
@@ -45,15 +45,19 @@
 	switch (type & BufferSizeMask) {
 		case BufferSize1280x720:
 			sessionPreset = AVCaptureSessionPreset1280x720;
+			bufferSize = CGSizeMake(1280, 720);
 			break;
 		case BufferSize640x480:
 			sessionPreset = AVCaptureSessionPreset640x480;
+			bufferSize = CGSizeMake(640, 480);
 			break;
 		case BufferSize480x360:
 			sessionPreset = AVCaptureSessionPresetMedium;
+			bufferSize = CGSizeMake(480, 360);
 			break;
 		case BufferSize192x144:
 			sessionPreset = AVCaptureSessionPresetLow;
+			bufferSize = CGSizeMake(192, 144);
 			break;
 		default:
 			sessionPreset = AVCaptureSessionPreset640x480;
