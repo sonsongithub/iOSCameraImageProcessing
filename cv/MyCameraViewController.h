@@ -1,6 +1,6 @@
 /*
  * Real time image processing framework for iOS
- * cvAppDelegate.h
+ * MyCameraViewController.h
  *
  * Copyright (c) Yuichi YOSHIDA, 11/04/20
  * All rights reserved.
@@ -28,15 +28,10 @@
  * HE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#import <UIKit/UIKit.h>
+#import "CameraViewController.h"
 
-@class cvViewController;
-
-@interface cvAppDelegate : NSObject <UIApplicationDelegate> {
-	IBOutlet UIViewController *subViewController;
+@interface MyCameraViewController : CameraViewController {
+    
 }
-
-@property (nonatomic, retain) IBOutlet UIWindow *window;
-@property (nonatomic, retain) IBOutlet UIViewController *viewController;
 
 @end

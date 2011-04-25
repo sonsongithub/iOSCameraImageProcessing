@@ -1,6 +1,6 @@
 /*
  * Real time image processing framework for iOS
- * cvAppDelegate.h
+ * MyCameraViewController.m
  *
  * Copyright (c) Yuichi YOSHIDA, 11/04/20
  * All rights reserved.
@@ -28,15 +28,24 @@
  * HE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#import <UIKit/UIKit.h>
+#import "MyCameraViewController.h"
 
-@class cvViewController;
+@implementation MyCameraViewController
 
-@interface cvAppDelegate : NSObject <UIApplicationDelegate> {
-	IBOutlet UIViewController *subViewController;
+- (void)viewWillAppear:(BOOL)animated {
+	[super viewWillAppear:animated];
+
+	// add toolbar
+	UIToolbar *bar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 44, self.view.frame.size.width, 44)];
+	[self.view addSubview:bar];
+	[bar release];
+	
+	UIBarButtonItem *closeButton = [[[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Close", nil) style:UIBarButtonItemStyleBordered target:self action:@selector(close:)] autorelease];
+	[bar setItems:[NSArray arrayWithObject:closeButton]];
 }
 
-@property (nonatomic, retain) IBOutlet UIWindow *window;
-@property (nonatomic, retain) IBOutlet UIViewController *viewController;
+- (void)close:(id)sender {
+	[self dismissModalViewControllerAnimated:YES];
+}
 
 @end

@@ -17,6 +17,7 @@
 		14311BFD1361788700C0C593 /* cvViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14311BFC1361788700C0C593 /* cvViewController.m */; };
 		14311C001361788700C0C593 /* cvViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 14311BFE1361788700C0C593 /* cvViewController.xib */; };
 		14311C1D13617C2300C0C593 /* MainWindow-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 14311C1B13617C2300C0C593 /* MainWindow-iPad.xib */; };
+		1443574013650BBF004CC7AA /* MyCameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1443573F13650BBF004CC7AA /* MyCameraViewController.m */; };
 		14C856181362C99E00968679 /* CameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14C856171362C99E00968679 /* CameraViewController.m */; };
 		14C856251362DF7000968679 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14C856231362DF7000968679 /* CoreMedia.framework */; };
 		14C856261362DF7000968679 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14C856241362DF7000968679 /* CoreVideo.framework */; };
@@ -40,6 +41,8 @@
 		14311BFC1361788700C0C593 /* cvViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = cvViewController.m; sourceTree = "<group>"; };
 		14311BFF1361788700C0C593 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/cvViewController.xib; sourceTree = "<group>"; };
 		14311C1C13617C2300C0C593 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = "en.lproj/MainWindow-iPad.xib"; sourceTree = "<group>"; };
+		1443573E13650BBF004CC7AA /* MyCameraViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyCameraViewController.h; sourceTree = "<group>"; };
+		1443573F13650BBF004CC7AA /* MyCameraViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyCameraViewController.m; sourceTree = "<group>"; };
 		14C856161362C99E00968679 /* CameraViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraViewController.h; sourceTree = "<group>"; };
 		14C856171362C99E00968679 /* CameraViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CameraViewController.m; sourceTree = "<group>"; };
 		14C856221362DF7000968679 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -104,6 +107,8 @@
 			children = (
 				14C856161362C99E00968679 /* CameraViewController.h */,
 				14C856171362C99E00968679 /* CameraViewController.m */,
+				1443573E13650BBF004CC7AA /* MyCameraViewController.h */,
+				1443573F13650BBF004CC7AA /* MyCameraViewController.m */,
 				14311BF51361788700C0C593 /* cvAppDelegate.h */,
 				14311BF61361788700C0C593 /* cvAppDelegate.m */,
 				14311BFB1361788700C0C593 /* cvViewController.h */,
@@ -192,6 +197,7 @@
 				14311BF71361788700C0C593 /* cvAppDelegate.m in Sources */,
 				14311BFD1361788700C0C593 /* cvViewController.m in Sources */,
 				14C856181362C99E00968679 /* CameraViewController.m in Sources */,
+				1443574013650BBF004CC7AA /* MyCameraViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
