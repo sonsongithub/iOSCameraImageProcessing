@@ -30,7 +30,7 @@
 
 #import "CameraViewController.h"
 
-@interface MyCameraViewController : CameraViewController {
+@interface MyCameraViewController : CameraViewController <CameraViewControllerDelegate> {
     
 }
 

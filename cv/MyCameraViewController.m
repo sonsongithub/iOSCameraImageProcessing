@@ -42,6 +42,11 @@
 	
 	UIBarButtonItem *closeButton = [[[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Close", nil) style:UIBarButtonItemStyleBordered target:self action:@selector(close:)] autorelease];
 	[bar setItems:[NSArray arrayWithObject:closeButton]];
+	
+	[self setDelegate:self];
+}
+
+- (void)didUpdateBufferCameraViewController:(CameraViewController*)CameraViewController {
 }
 
 - (void)close:(id)sender {

@@ -32,9 +32,36 @@
 #import <AVFoundation/AVFoundation.h>
 #import <CoreGraphics/CoreGraphics.h>
 
+#define CameraViewControllerSizeMask 8 < 8;
+
+typedef enum {
+	BufferTypeMask	= 0x0f,
+	BufferGrayColor	= 0,
+	BufferRGBColor	= 1,
+}CameraViewControllerType;
+
+typedef enum {
+	BufferSizeMask		= 0xf0,
+	BufferSize1280x720	= 0 << 8,
+	BufferSize640x480	= 1 << 8,
+	BufferSize480x360	= 2 << 8,
+	BufferSize192x144	= 3 << 8,
+}CameraViewControllerSize;
+
+@class CameraViewController;
+
+@protocol CameraViewControllerDelegate <NSObject>
+- (void)didUpdateBufferCameraViewController:(CameraViewController*)CameraViewController;
+@end
+
 @interface CameraViewController : UIViewController <AVCaptureVideoDataOutputSampleBufferDelegate> {
+	unsigned char					*buffer;
 	AVCaptureSession				*session;
 	AVCaptureVideoPreviewLayer		*previewLayer;
 	float							aspectRatio;
+	CameraViewControllerType		type;
+	id<CameraViewControllerDelegate>delegate;
 }
+- (id)initWithCameraViewControllerType:(CameraViewControllerType)value;
+@property (nonatomic, assign) id <CameraViewControllerDelegate> delegate;
 @end

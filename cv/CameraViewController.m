@@ -30,10 +30,49 @@
 
 #import "CameraViewController.h"
 
-
 @implementation CameraViewController
 
-- (void)initCamera {
+@synthesize delegate;
+
+- (void)prepareWithCameraViewControllerType:(CameraViewControllerType)value {
+	//
+	type = value;
+	
+	NSString *sessionPreset = nil;
+	int pixelFormat = 0;
+	
+	// decide camera type
+	switch (type & BufferSizeMask) {
+		case BufferSize1280x720:
+			sessionPreset = AVCaptureSessionPreset1280x720;
+			break;
+		case BufferSize640x480:
+			sessionPreset = AVCaptureSessionPreset640x480;
+			break;
+		case BufferSize480x360:
+			sessionPreset = AVCaptureSessionPresetMedium;
+			break;
+		case BufferSize192x144:
+			sessionPreset = AVCaptureSessionPresetLow;
+			break;
+		default:
+			sessionPreset = AVCaptureSessionPreset640x480;
+			break;
+	}
+	
+	// decide camera pixel type
+	switch (type & BufferTypeMask) {
+		case BufferGrayColor:
+			pixelFormat = kCVPixelFormatType_420YpCbCr8BiPlanarFullRange;
+			break;
+		case BufferRGBColor:
+			pixelFormat = kCVPixelFormatType_32BGRA;
+			break;
+		default:
+			pixelFormat = kCVPixelFormatType_420YpCbCr8BiPlanarFullRange;
+			break;
+	}
+	
 	// set background color
 	[self.view setBackgroundColor:[UIColor blackColor]];
 	
@@ -49,7 +88,7 @@
 	AVCaptureDeviceInput *videoInput = [AVCaptureDeviceInput deviceInputWithDevice:videoDevice error:&error];
 	
 	// setup video output
-	NSDictionary *settingInfo = [NSDictionary dictionaryWithObject:[NSNumber numberWithInt:kCVPixelFormatType_420YpCbCr8BiPlanarFullRange] forKey:(id)kCVPixelBufferPixelFormatTypeKey];
+	NSDictionary *settingInfo = [NSDictionary dictionaryWithObject:[NSNumber numberWithInt:pixelFormat] forKey:(id)kCVPixelBufferPixelFormatTypeKey];
 	
 	AVCaptureVideoDataOutput * videoDataOutput = [[[AVCaptureVideoDataOutput alloc] init] autorelease];
 	[videoDataOutput setAlwaysDiscardsLateVideoFrames:YES];
@@ -61,7 +100,7 @@
 	[session beginConfiguration];
 	[session addInput:videoInput];
 	[session addOutput:videoDataOutput];
-	[session setSessionPreset:AVCaptureSessionPreset640x480];
+	[session setSessionPreset:sessionPreset];
 	[session commitConfiguration];
 	
 	if ([session.sessionPreset isEqualToString:AVCaptureSessionPreset1280x720]) {
@@ -70,7 +109,7 @@
 	else {
 		aspectRatio = 4.0 / 3.0;
 	}
-	
+		
 	// setting preview layer
 	previewLayer = [AVCaptureVideoPreviewLayer layerWithSession:session];
 }
@@ -79,16 +118,57 @@
 #pragma mark AVCaptureVideoDataOutputSampleBufferDelegate
 
 - (void)captureOutput:(AVCaptureOutput *)captureOutput didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer fromConnection:(AVCaptureConnection *)connection {
+	CVImageBufferRef imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
 	if ([session isRunning]) {
-//		CVImageBufferRef imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
+		if ((type & BufferTypeMask) == BufferGrayColor) {
+			size_t width= CVPixelBufferGetWidth(imageBuffer); 
+			size_t height = CVPixelBufferGetHeight(imageBuffer); 
+			
+			CVPixelBufferLockBaseAddress(imageBuffer, 0);
+			
+			CVPlanarPixelBufferInfo_YCbCrBiPlanar *planar = CVPixelBufferGetBaseAddress(imageBuffer);
+			
+			size_t offset = NSSwapBigLongToHost(planar->componentInfoY.offset);
+			
+			unsigned char* baseAddress = (unsigned char *)CVPixelBufferGetBaseAddress(imageBuffer);
+			unsigned char* pixelAddress = baseAddress + offset;
+			
+			if (buffer == NULL)
+				buffer = (unsigned char*)malloc(sizeof(unsigned char) * width * height);
+			
+			memcpy(buffer, pixelAddress, sizeof(unsigned char) * width * height);
+
+			CVPixelBufferUnlockBaseAddress(imageBuffer, 0);
+		}
+		else if ((type & BufferTypeMask) == BufferRGBColor) {
+			size_t width = CVPixelBufferGetWidth(imageBuffer);
+			size_t height = CVPixelBufferGetHeight(imageBuffer); 
+			CVPixelBufferLockBaseAddress(imageBuffer, 0);
+			
+			unsigned char* baseAddress = (unsigned char *)CVPixelBufferGetBaseAddress(imageBuffer);
+			
+			memcpy(buffer, baseAddress, sizeof(unsigned char) * width * height * 4);
+			CVPixelBufferUnlockBaseAddress(imageBuffer, 0);
+		}
+		if ([delegate respondsToSelector:@selector(didUpdateBufferCameraViewController:)])
+			[delegate didUpdateBufferCameraViewController:self];
 	}
+}
+
+- (id)initWithCameraViewControllerType:(CameraViewControllerType)value {
+    self = [super initWithNibName:nil bundle:nil];
+	if (self) {
+        // Custom initialization
+		[self prepareWithCameraViewControllerType:value];
+	}
+	return self;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-		[self initCamera];
+		[self prepareWithCameraViewControllerType:BufferGrayColor|BufferSize640x480];
     }
     return self;
 }
@@ -96,7 +176,7 @@
 - (id)initWithCoder:(NSCoder *)coder {
     self = [super initWithCoder:coder];
     if (self) {
-		[self initCamera];
+		[self prepareWithCameraViewControllerType:BufferGrayColor|BufferSize640x480];
     }
     return self;
 }
@@ -159,12 +239,12 @@
 	// this is magical code
 	// if you want to remove session object and preview layer, you have to wait some minitunes like following code.
 	// maybe, this is bug.
-	while ([session isRunning]) {
-		NSLog(@"waiting...");
-		[session stopRunning];
-		[NSThread sleepForTimeInterval:0.1];
-	}
-	[previewLayer removeFromSuperlayer];
+	//	while ([session isRunning]) {
+	//		NSLog(@"waiting...");
+	//		[session stopRunning];
+	//		[NSThread sleepForTimeInterval:0.1];
+	//	}
+	//	[previewLayer removeFromSuperlayer];
 }
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
@@ -186,6 +266,7 @@
 }
 
 - (void)dealloc {
+	free(buffer);
 	[session release];
     [super dealloc];
 }
