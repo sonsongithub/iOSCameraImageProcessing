@@ -30,6 +30,32 @@
 
 #import "CameraViewController.h"
 
+#include <stdlib.h>
+#include <stdio.h>
+#include <sys/time.h>
+
+static struct timeval _start, _end;
+
+void _tic() {
+	gettimeofday(&_start, NULL);
+}
+
+double _toc() {
+	gettimeofday(&_end, NULL);
+	long int e_sec = _end.tv_sec * 1000000 + _end.tv_usec;
+	long int s_sec = _start.tv_sec * 1000000 + _start.tv_usec;
+	return (double)((e_sec - s_sec) / 1000.0);
+}
+
+double _tocp() {
+	gettimeofday(&_end, NULL);
+	long int e_sec = _end.tv_sec * 1000000 + _end.tv_usec;
+	long int s_sec = _start.tv_sec * 1000000 + _start.tv_usec;
+	double t = (double)((e_sec - s_sec) / 1000.0);
+	printf("%6.3f\n", t);
+	return t;
+}
+
 @implementation CameraViewController
 
 @synthesize delegate, bufferSize;
@@ -98,7 +124,15 @@
 	[videoDataOutput setAlwaysDiscardsLateVideoFrames:YES];
 	[videoDataOutput setMinFrameDuration:CMTimeMake(1, 30)];
 	[videoDataOutput setVideoSettings:settingInfo];	
+
+	// support multi-threading
+#ifdef _MULTI_THREADING
+	dispatch_queue_t queue = dispatch_queue_create("captureQueue", NULL);
+    [videoDataOutput setSampleBufferDelegate:self queue:queue];
+    dispatch_release(queue);
+#else
 	[videoDataOutput setSampleBufferDelegate:self queue:dispatch_get_main_queue()];
+#endif
 	
 	// attach video to session
 	[session beginConfiguration];
@@ -123,6 +157,9 @@
 
 - (void)captureOutput:(AVCaptureOutput *)captureOutput didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer fromConnection:(AVCaptureConnection *)connection {
 	CVImageBufferRef imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
+#ifdef _MULTI_THREADING
+	NSAutoreleasePool *pool = [NSAutoreleasePool new];
+#endif
 	if ([session isRunning]) {
 		if ((type & BufferTypeMask) == BufferGrayColor) {
 			size_t width= CVPixelBufferGetWidth(imageBuffer); 
@@ -156,7 +193,11 @@
 		}
 		if ([delegate respondsToSelector:@selector(didUpdateBufferCameraViewController:)])
 			[delegate didUpdateBufferCameraViewController:self];
+		
 	}
+#ifdef _MULTI_THREADING
+	[pool release];
+#endif
 }
 
 - (id)initWithCameraViewControllerType:(CameraViewControllerType)value {
@@ -243,12 +284,12 @@
 	// this is magical code
 	// if you want to remove session object and preview layer, you have to wait some minitunes like following code.
 	// maybe, this is bug.
-	//	while ([session isRunning]) {
-	//		NSLog(@"waiting...");
-	//		[session stopRunning];
-	//		[NSThread sleepForTimeInterval:0.1];
-	//	}
-	//	[previewLayer removeFromSuperlayer];
+//	while ([session isRunning]) {
+//		NSLog(@"waiting...");
+//		[session stopRunning];
+//		[NSThread sleepForTimeInterval:0.1];
+//	}
+//	[previewLayer removeFromSuperlayer];
 }
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {

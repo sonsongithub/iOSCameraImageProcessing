@@ -32,6 +32,12 @@
 #import <AVFoundation/AVFoundation.h>
 #import <CoreGraphics/CoreGraphics.h>
 
+#define _MULTI_THREADING	// support multi-threading or not.
+
+void _tic();				// not thread safe
+double _toc();
+double _tocp();				// with printf
+
 typedef enum {
 	BufferTypeMask	= 0x0f,
 	BufferGrayColor	= 0,
