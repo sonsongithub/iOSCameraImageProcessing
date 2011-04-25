@@ -94,7 +94,6 @@
 	previewLayer.frame = CGRectMake(0, 0, width, height);
 	[self.view.layer addSublayer:previewLayer];
 	[session startRunning];
-	
 }
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {

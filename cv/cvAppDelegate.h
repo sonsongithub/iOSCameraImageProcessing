@@ -11,7 +11,7 @@
 @class cvViewController;
 
 @interface cvAppDelegate : NSObject <UIApplicationDelegate> {
-
+	IBOutlet UIViewController *subViewController;
 }
 
 @property (nonatomic, retain) IBOutlet UIWindow *window;

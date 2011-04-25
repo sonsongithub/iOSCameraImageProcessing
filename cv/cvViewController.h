@@ -9,7 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface cvViewController : UIViewController {
-    
 }
-
+- (IBAction)openCameraViewController:(id)sender;
 @end

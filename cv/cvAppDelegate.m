@@ -21,7 +21,12 @@
 {
 	// Override point for customization after application launch.
 	 
-	self.window.rootViewController = self.viewController;
+	// test pattern 1
+	// self.window.rootViewController = self.viewController;
+	
+	// test pattern 2
+	self.window.rootViewController = subViewController;
+	
 	[self.window makeKeyAndVisible];
     return YES;
 }
