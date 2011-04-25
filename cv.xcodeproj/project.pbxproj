@@ -23,6 +23,10 @@
 		14B377941365BD6200738C9C /* icon114x114.png in Resources */ = {isa = PBXBuildFile; fileRef = 14B377911365BD6200738C9C /* icon114x114.png */; };
 		14B377951365BD6200738C9C /* icon57x57.png in Resources */ = {isa = PBXBuildFile; fileRef = 14B377921365BD6200738C9C /* icon57x57.png */; };
 		14B377961365BD6200738C9C /* icon72x72.png in Resources */ = {isa = PBXBuildFile; fileRef = 14B377931365BD6200738C9C /* icon72x72.png */; };
+		14B377F11365C2C000738C9C /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 14B377ED1365C2C000738C9C /* Default.png */; };
+		14B377F21365C2C000738C9C /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 14B377EE1365C2C000738C9C /* Default@2x.png */; };
+		14B377FE1365C31E00738C9C /* Default-Landscape.png in Resources */ = {isa = PBXBuildFile; fileRef = 14B377FC1365C31E00738C9C /* Default-Landscape.png */; };
+		14B377FF1365C31E00738C9C /* Default-Portrait.png in Resources */ = {isa = PBXBuildFile; fileRef = 14B377FD1365C31E00738C9C /* Default-Portrait.png */; };
 		14C856181362C99E00968679 /* CameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14C856171362C99E00968679 /* CameraViewController.m */; };
 		14C856251362DF7000968679 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14C856231362DF7000968679 /* CoreMedia.framework */; };
 		14C856261362DF7000968679 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14C856241362DF7000968679 /* CoreVideo.framework */; };
@@ -55,6 +59,10 @@
 		14B377911365BD6200738C9C /* icon114x114.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon114x114.png; sourceTree = "<group>"; };
 		14B377921365BD6200738C9C /* icon57x57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon57x57.png; sourceTree = "<group>"; };
 		14B377931365BD6200738C9C /* icon72x72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon72x72.png; sourceTree = "<group>"; };
+		14B377ED1365C2C000738C9C /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		14B377EE1365C2C000738C9C /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		14B377FC1365C31E00738C9C /* Default-Landscape.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape.png"; sourceTree = "<group>"; };
+		14B377FD1365C31E00738C9C /* Default-Portrait.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Portrait.png"; sourceTree = "<group>"; };
 		14C856161362C99E00968679 /* CameraViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraViewController.h; sourceTree = "<group>"; };
 		14C856171362C99E00968679 /* CameraViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CameraViewController.m; sourceTree = "<group>"; };
 		14C856221362DF7000968679 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -168,6 +176,10 @@
 		14B377901365BD6200738C9C /* image */ = {
 			isa = PBXGroup;
 			children = (
+				14B377FC1365C31E00738C9C /* Default-Landscape.png */,
+				14B377FD1365C31E00738C9C /* Default-Portrait.png */,
+				14B377ED1365C2C000738C9C /* Default.png */,
+				14B377EE1365C2C000738C9C /* Default@2x.png */,
 				14B377911365BD6200738C9C /* icon114x114.png */,
 				14B377921365BD6200738C9C /* icon57x57.png */,
 				14B377931365BD6200738C9C /* icon72x72.png */,
@@ -229,6 +241,10 @@
 				14B377941365BD6200738C9C /* icon114x114.png in Resources */,
 				14B377951365BD6200738C9C /* icon57x57.png in Resources */,
 				14B377961365BD6200738C9C /* icon72x72.png in Resources */,
+				14B377F11365C2C000738C9C /* Default.png in Resources */,
+				14B377F21365C2C000738C9C /* Default@2x.png in Resources */,
+				14B377FE1365C31E00738C9C /* Default-Landscape.png in Resources */,
+				14B377FF1365C31E00738C9C /* Default-Portrait.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
