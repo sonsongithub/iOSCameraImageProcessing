@@ -60,6 +60,8 @@ double _tocp() {
 
 @synthesize delegate, bufferSize;
 
+#pragma mark - Instance method
+
 - (void)prepareWithCameraViewControllerType:(CameraViewControllerType)value {
 	//
 	type = value;
@@ -152,54 +154,6 @@ double _tocp() {
 	previewLayer = [AVCaptureVideoPreviewLayer layerWithSession:session];
 }
 
-#pragma mark -
-#pragma mark AVCaptureVideoDataOutputSampleBufferDelegate
-
-- (void)captureOutput:(AVCaptureOutput *)captureOutput didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer fromConnection:(AVCaptureConnection *)connection {
-	CVImageBufferRef imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
-#ifdef _MULTI_THREADING
-	NSAutoreleasePool *pool = [NSAutoreleasePool new];
-#endif
-	if ([session isRunning]) {
-		if ((type & BufferTypeMask) == BufferGrayColor) {
-			size_t width= CVPixelBufferGetWidth(imageBuffer); 
-			size_t height = CVPixelBufferGetHeight(imageBuffer); 
-			
-			CVPixelBufferLockBaseAddress(imageBuffer, 0);
-			
-			CVPlanarPixelBufferInfo_YCbCrBiPlanar *planar = CVPixelBufferGetBaseAddress(imageBuffer);
-			
-			size_t offset = NSSwapBigLongToHost(planar->componentInfoY.offset);
-			
-			unsigned char* baseAddress = (unsigned char *)CVPixelBufferGetBaseAddress(imageBuffer);
-			unsigned char* pixelAddress = baseAddress + offset;
-			
-			if (buffer == NULL)
-				buffer = (unsigned char*)malloc(sizeof(unsigned char) * width * height);
-			
-			memcpy(buffer, pixelAddress, sizeof(unsigned char) * width * height);
-
-			CVPixelBufferUnlockBaseAddress(imageBuffer, 0);
-		}
-		else if ((type & BufferTypeMask) == BufferRGBColor) {
-			size_t width = CVPixelBufferGetWidth(imageBuffer);
-			size_t height = CVPixelBufferGetHeight(imageBuffer); 
-			CVPixelBufferLockBaseAddress(imageBuffer, 0);
-			
-			unsigned char* baseAddress = (unsigned char *)CVPixelBufferGetBaseAddress(imageBuffer);
-			
-			memcpy(buffer, baseAddress, sizeof(unsigned char) * width * height * 4);
-			CVPixelBufferUnlockBaseAddress(imageBuffer, 0);
-		}
-		if ([delegate respondsToSelector:@selector(didUpdateBufferCameraViewController:)])
-			[delegate didUpdateBufferCameraViewController:self];
-		
-	}
-#ifdef _MULTI_THREADING
-	[pool release];
-#endif
-}
-
 - (id)initWithCameraViewControllerType:(CameraViewControllerType)value {
     self = [super initWithNibName:nil bundle:nil];
 	if (self) {
@@ -207,27 +161,6 @@ double _tocp() {
 		[self prepareWithCameraViewControllerType:value];
 	}
 	return self;
-}
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-		[self prepareWithCameraViewControllerType:BufferGrayColor|BufferSize640x480];
-    }
-    return self;
-}
-
-- (id)initWithCoder:(NSCoder *)coder {
-    self = [super initWithCoder:coder];
-    if (self) {
-		[self prepareWithCameraViewControllerType:BufferGrayColor|BufferSize640x480];
-    }
-    return self;
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
 }
 
 - (void)adjustCameraPreviewLayerOrientaion:(UIInterfaceOrientation)orientation {
@@ -263,6 +196,37 @@ double _tocp() {
 	previewLayer.transform = m;
 }
 
+- (void)waitForSessionStopRunning {
+	// this is magical code
+	// if you want to remove session object and preview layer, you have to wait some minitunes like following code.
+	// maybe, this is bug.
+	while ([session isRunning]) {
+		NSLog(@"waiting...");
+		[session stopRunning];
+		[NSThread sleepForTimeInterval:0.1];
+	}
+	[previewLayer removeFromSuperlayer];
+}
+
+#pragma mark - Override
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        // Custom initialization
+		[self prepareWithCameraViewControllerType:BufferGrayColor|BufferSize640x480];
+    }
+    return self;
+}
+
+- (id)initWithCoder:(NSCoder *)coder {
+    self = [super initWithCoder:coder];
+    if (self) {
+		[self prepareWithCameraViewControllerType:BufferGrayColor|BufferSize640x480];
+    }
+    return self;
+}
+
 #pragma mark - View lifecycle
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -280,28 +244,12 @@ double _tocp() {
 
 - (void)viewWillDisappear:(BOOL)animated {
 	[super viewWillDisappear:animated];
-	
-	// this is magical code
-	// if you want to remove session object and preview layer, you have to wait some minitunes like following code.
-	// maybe, this is bug.
-	while ([session isRunning]) {
-		NSLog(@"waiting...");
-		[session stopRunning];
-		[NSThread sleepForTimeInterval:0.1];
-	}
-	[previewLayer removeFromSuperlayer];
 }
+
+#pragma mark - To support orientaion
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
 	[self adjustCameraPreviewLayerOrientaion:toInterfaceOrientation];
-}
-
-- (void)viewDidLoad {
-    [super viewDidLoad];
-}
-
-- (void)viewDidUnload {
-    [super viewDidUnload];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
@@ -309,6 +257,55 @@ double _tocp() {
 	// for orientation test
 	//return YES;
 }
+
+#pragma mark - AVCaptureVideoDataOutputSampleBufferDelegate
+
+- (void)captureOutput:(AVCaptureOutput *)captureOutput didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer fromConnection:(AVCaptureConnection *)connection {
+	CVImageBufferRef imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
+#ifdef _MULTI_THREADING
+	NSAutoreleasePool *pool = [NSAutoreleasePool new];
+#endif
+	if ([session isRunning]) {
+		if ((type & BufferTypeMask) == BufferGrayColor) {
+			size_t width= CVPixelBufferGetWidth(imageBuffer); 
+			size_t height = CVPixelBufferGetHeight(imageBuffer); 
+			
+			CVPixelBufferLockBaseAddress(imageBuffer, 0);
+			
+			CVPlanarPixelBufferInfo_YCbCrBiPlanar *planar = CVPixelBufferGetBaseAddress(imageBuffer);
+			
+			size_t offset = NSSwapBigLongToHost(planar->componentInfoY.offset);
+			
+			unsigned char* baseAddress = (unsigned char *)CVPixelBufferGetBaseAddress(imageBuffer);
+			unsigned char* pixelAddress = baseAddress + offset;
+			
+			if (buffer == NULL)
+				buffer = (unsigned char*)malloc(sizeof(unsigned char) * width * height);
+			
+			memcpy(buffer, pixelAddress, sizeof(unsigned char) * width * height);
+			
+			CVPixelBufferUnlockBaseAddress(imageBuffer, 0);
+		}
+		else if ((type & BufferTypeMask) == BufferRGBColor) {
+			size_t width = CVPixelBufferGetWidth(imageBuffer);
+			size_t height = CVPixelBufferGetHeight(imageBuffer); 
+			CVPixelBufferLockBaseAddress(imageBuffer, 0);
+			
+			unsigned char* baseAddress = (unsigned char *)CVPixelBufferGetBaseAddress(imageBuffer);
+			
+			memcpy(buffer, baseAddress, sizeof(unsigned char) * width * height * 4);
+			CVPixelBufferUnlockBaseAddress(imageBuffer, 0);
+		}
+		if ([delegate respondsToSelector:@selector(didUpdateBufferCameraViewController:)])
+			[delegate didUpdateBufferCameraViewController:self];
+		
+	}
+#ifdef _MULTI_THREADING
+	[pool release];
+#endif
+}
+
+#pragma mark - dealloc
 
 - (void)dealloc {
 	free(buffer);

@@ -125,9 +125,9 @@
 		14311BEC1361788700C0C593 /* cv */ = {
 			isa = PBXGroup;
 			children = (
-				14975FC813654A1300F41B08 /* Quartz Help Library */,
 				14C856161362C99E00968679 /* CameraViewController.h */,
 				14C856171362C99E00968679 /* CameraViewController.m */,
+				14975FC813654A1300F41B08 /* Quartz Help Library */,
 				1443573E13650BBF004CC7AA /* MyCameraViewController.h */,
 				1443573F13650BBF004CC7AA /* MyCameraViewController.m */,
 				14311BF51361788700C0C593 /* cvAppDelegate.h */,
