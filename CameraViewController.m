@@ -244,6 +244,7 @@ double _tocp() {
 
 - (void)viewWillDisappear:(BOOL)animated {
 	[super viewWillDisappear:animated];
+	[self waitForSessionStopRunning];
 }
 
 #pragma mark - To support orientaion
@@ -308,7 +309,6 @@ double _tocp() {
 #pragma mark - dealloc
 
 - (void)dealloc {
-	[self waitForSessionStopRunning];
 	free(buffer);
 	[session release];
     [super dealloc];

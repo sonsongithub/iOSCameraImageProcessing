@@ -33,4 +33,6 @@
 @interface cvViewController : UIViewController {
 }
 - (IBAction)openCameraViewController:(id)sender;
+- (IBAction)openBinarizedViewController:(id)sender;
+- (IBAction)openBenchmarkViewController:(id)sender;
 @end

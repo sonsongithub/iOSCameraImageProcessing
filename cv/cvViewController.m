@@ -35,9 +35,15 @@
 @implementation cvViewController
 
 - (IBAction)openCameraViewController:(id)sender {
+}
+
+- (IBAction)openBinarizedViewController:(id)sender {
 	MyCameraViewController *controller = [[MyCameraViewController alloc] initWithCameraViewControllerType:BufferGrayColor|BufferSize640x480];
 	[self presentModalViewController:controller animated:YES];
 	[controller release];
+}
+
+- (IBAction)openBenchmarkViewController:(id)sender {
 }
 
 @end
