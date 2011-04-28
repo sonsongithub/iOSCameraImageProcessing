@@ -128,13 +128,14 @@ double _tocp() {
 	[videoDataOutput setVideoSettings:settingInfo];	
 
 	// support multi-threading
-#ifdef _MULTI_THREADING
-	dispatch_queue_t queue = dispatch_queue_create("captureQueue", NULL);
-    [videoDataOutput setSampleBufferDelegate:self queue:queue];
-    dispatch_release(queue);
-#else
-	[videoDataOutput setSampleBufferDelegate:self queue:dispatch_get_main_queue()];
-#endif
+	if ((type & MultiThreadingMask) == SupportMultiThreading) {
+		dispatch_queue_t queue = dispatch_queue_create("captureQueue", NULL);
+		[videoDataOutput setSampleBufferDelegate:self queue:queue];
+		dispatch_release(queue);
+	}
+	else {
+		[videoDataOutput setSampleBufferDelegate:self queue:dispatch_get_main_queue()];
+	}
 	
 	// attach video to session
 	[session beginConfiguration];
@@ -262,10 +263,12 @@ double _tocp() {
 #pragma mark - AVCaptureVideoDataOutputSampleBufferDelegate
 
 - (void)captureOutput:(AVCaptureOutput *)captureOutput didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer fromConnection:(AVCaptureConnection *)connection {
+	NSAutoreleasePool *pool = nil;
+	if (![NSThread isMainThread])
+		pool = [NSAutoreleasePool new];
+	
 	CVImageBufferRef imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
-#ifdef _MULTI_THREADING
-	NSAutoreleasePool *pool = [NSAutoreleasePool new];
-#endif
+	
 	if ([session isRunning]) {
 		if ((type & BufferTypeMask) == BufferGrayColor) {
 			size_t width= CVPixelBufferGetWidth(imageBuffer); 
@@ -301,9 +304,8 @@ double _tocp() {
 			[delegate didUpdateBufferCameraViewController:self];
 		
 	}
-#ifdef _MULTI_THREADING
-	[pool release];
-#endif
+	if (![NSThread isMainThread])
+		[pool release];
 }
 
 #pragma mark - dealloc

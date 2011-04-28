@@ -43,7 +43,7 @@
 }
 
 - (IBAction)openBinarizedViewController:(id)sender {
-	BinarizedCameraViewController *controller = [[BinarizedCameraViewController alloc] initWithCameraViewControllerType:BufferGrayColor|BufferSize640x480];
+	BinarizedCameraViewController *controller = [[BinarizedCameraViewController alloc] initWithCameraViewControllerType:BufferGrayColor|BufferSize640x480|SupportMultiThreading];
 	[self presentModalViewController:controller animated:YES];
 	[controller release];
 }

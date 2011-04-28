@@ -32,8 +32,6 @@
 #import <AVFoundation/AVFoundation.h>
 #import <CoreGraphics/CoreGraphics.h>
 
-#define _MULTI_THREADING	// support multi-threading or not.
-
 void _tic();				// not thread safe
 double _toc();
 double _tocp();				// with printf
@@ -54,8 +52,8 @@ typedef enum {
 
 typedef enum {
 	MultiThreadingMask			= 0x100,
-	NotSupportMultiThreading	= 0 << 5,
-	SupportMultiThreading		= 1 << 5,
+	NotSupportMultiThreading	= 0 << 8,
+	SupportMultiThreading		= 1 << 8,
 }CameraViewControllerMultiThreading;
 
 @class CameraViewController;

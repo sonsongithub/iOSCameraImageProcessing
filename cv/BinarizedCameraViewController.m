@@ -87,15 +87,15 @@
 	// Make CGImage from pixel array, with Quartz Help Library
 	CGImageRef imageRef = CGImageGrayColorCreateWithGrayPixelBuffer(binarizedPixels, width, height);
 	
-	// Update UIImageView with CGImageRef
-	// support multi-threading
-#ifdef _MULTI_THREADING
-	dispatch_sync(dispatch_get_main_queue(), ^{
+	// Have to update UIImageView with CGImageRef on main-thread.
+	if (![NSThread isMainThread]) {
+		dispatch_sync(dispatch_get_main_queue(), ^{
+			[binarizedImageView setImage:[UIImage imageWithCGImage:imageRef]];
+		});
+	}
+	else {
 		[binarizedImageView setImage:[UIImage imageWithCGImage:imageRef]];
-	});
-#else
-	[binarizedImageView setImage:[UIImage imageWithCGImage:imageRef]];
-#endif
+	}
 	
 	// release image
 	CGImageRelease(imageRef);
