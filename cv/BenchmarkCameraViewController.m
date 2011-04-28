@@ -30,6 +30,12 @@
 
 #import "BenchmarkCameraViewController.h"
 
+//#define _TEST_COLOR
+
+#define _FPS_INTERVAL 2
+
+#import "QuartzHelpLibrary.h"
+
 @implementation BenchmarkCameraViewController
 
 #pragma mark - Instance method
@@ -41,9 +47,19 @@
 #pragma mark - Override
 
 - (id)init {
+#ifdef _TEST_COLOR
+    self = [super initWithCameraViewControllerType:BufferRGBColor|BufferSize640x480];
+#else
     self = [super initWithCameraViewControllerType:BufferGrayColor|BufferSize640x480];
+#endif
     if (self) {
 		binarizedPixels = (unsigned char*)malloc(sizeof(unsigned char) * (int)self.bufferSize.width * (int)self.bufferSize.height);
+		
+		// fit to view
+		float ratio = self.bufferSize.width / self.bufferSize.height;
+		cameraImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, (int)self.view.frame.size.width, (int)self.view.frame.size.width * ratio)];
+		[self.view addSubview:cameraImageView];
+		[cameraImageView release];
     }
     return self;
 }
@@ -51,15 +67,131 @@
 #pragma mark - CameraViewControllerDelegate
 
 - (void)didUpdateBufferCameraViewController:(CameraViewController*)CameraViewController {
+#ifdef _TEST_COLOR
+	_tic();
+	int width = self.bufferSize.width;
+	int height = self.bufferSize.height;
 	
-	int width = self.bufferSize.height;
-	int height = self.bufferSize.width;
+	for (int y = 0; y < height; y++) {
+		for (int x = 0; x < width; x++) {
+			int k = (buffer[4 * y * width + 4 * x + 0] >> 2) + (buffer[4 * y * width + 4 * x + 1] >> 1) + (buffer[4 * y * width + 4 * x + 2] >> 2);
+			binarizedPixels[y * width + x] = k;
+		}
+	}
+	_tocp();
+	
+	_tic();
+	// Make CGImage from pixel array, with Quartz Help Library
+	CGImageRef imageRef = CGImageGrayColorCreateWithGrayPixelBuffer(binarizedPixels, width, height);
+	_tocp();
+	
+	_tic();
+	
+	// Have to update UIImageView with CGImageRef on main-thread.
+	if (![NSThread isMainThread]) {
+		dispatch_sync(dispatch_get_main_queue(), ^{
+			[cameraImageView setImage:[UIImage imageWithCGImage:imageRef]];
+		});
+	}
+	else {
+		[cameraImageView setImage:[UIImage imageWithCGImage:imageRef]];
+	}
+	
+	_tocp();
+	
+	// release image
+	CGImageRelease(imageRef);
+#else
+	_tic();
+	int width = self.bufferSize.width;
+	int height = self.bufferSize.height;
 	int threshold = 120;
 	for (int y = 0; y < height; y++) {
 		for (int x = 0; x < width; x++) {
 			binarizedPixels[y * width + x] = buffer[y * width + x] > threshold ? 255 : 0;
 		}
 	}
+	_tocp();
+	
+	_tic();
+	// Make CGImage from pixel array, with Quartz Help Library
+	CGImageRef imageRef = CGImageGrayColorCreateWithGrayPixelBuffer(binarizedPixels, width, height);
+	_tocp();
+	
+	_tic();
+	
+	// Have to update UIImageView with CGImageRef on main-thread.
+	if (![NSThread isMainThread]) {
+		dispatch_sync(dispatch_get_main_queue(), ^{
+			[cameraImageView setImage:[UIImage imageWithCGImage:imageRef]];
+		});
+	}
+	else {
+		[cameraImageView setImage:[UIImage imageWithCGImage:imageRef]];
+	}
+	
+	_tocp();
+	
+	// release image
+	CGImageRelease(imageRef);
+#endif
+}
+
+#pragma mark - AVCaptureVideoDataOutputSampleBufferDelegate
+
+- (void)captureOutput:(AVCaptureOutput *)captureOutput didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer fromConnection:(AVCaptureConnection *)connection {
+	
+	printf("------------------------------------------------------------------------\n");
+	frameCounter++;
+	
+	NSAutoreleasePool *pool = nil;
+	if (![NSThread isMainThread])
+		pool = [NSAutoreleasePool new];
+	
+	CVImageBufferRef imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);
+	
+	if ([session isRunning]) {
+		_tic();
+		if ((type & BufferTypeMask) == BufferGrayColor) {
+			size_t width= CVPixelBufferGetWidth(imageBuffer); 
+			size_t height = CVPixelBufferGetHeight(imageBuffer); 
+			
+			CVPixelBufferLockBaseAddress(imageBuffer, 0);
+			
+			CVPlanarPixelBufferInfo_YCbCrBiPlanar *planar = CVPixelBufferGetBaseAddress(imageBuffer);
+			
+			size_t offset = NSSwapBigLongToHost(planar->componentInfoY.offset);
+			
+			unsigned char* baseAddress = (unsigned char *)CVPixelBufferGetBaseAddress(imageBuffer);
+			unsigned char* pixelAddress = baseAddress + offset;
+			
+			if (buffer == NULL)
+				buffer = (unsigned char*)malloc(sizeof(unsigned char) * width * height);
+			
+			memcpy(buffer, pixelAddress, sizeof(unsigned char) * width * height);
+			
+			CVPixelBufferUnlockBaseAddress(imageBuffer, 0);
+		}
+		else if ((type & BufferTypeMask) == BufferRGBColor) {
+			size_t width = CVPixelBufferGetWidth(imageBuffer);
+			size_t height = CVPixelBufferGetHeight(imageBuffer); 
+			CVPixelBufferLockBaseAddress(imageBuffer, 0);
+			
+			unsigned char* baseAddress = (unsigned char *)CVPixelBufferGetBaseAddress(imageBuffer);
+			
+			if (buffer == NULL)
+				buffer = (unsigned char*)malloc(sizeof(unsigned char) * width * height * 4);
+			
+			memcpy(buffer, baseAddress, sizeof(unsigned char) * width * height * 4);
+			CVPixelBufferUnlockBaseAddress(imageBuffer, 0);
+		}
+		_tocp();
+		if ([delegate respondsToSelector:@selector(didUpdateBufferCameraViewController:)])
+			[delegate didUpdateBufferCameraViewController:self];
+		
+	}
+	if (![NSThread isMainThread])
+		[pool release];
 }
 
 #pragma mark - Life cycle
@@ -76,7 +208,28 @@
 	[bar setItems:[NSArray arrayWithObject:closeButton]];
 	
 	[self setDelegate:self];
+	
+	[self.view bringSubviewToFront:cameraImageView];
+	
+	fpsTimer = [NSTimer scheduledTimerWithTimeInterval:_FPS_INTERVAL target:self selector:@selector(updateFPS:) userInfo:nil repeats:YES];
+
 }
+
+- (void)viewWillDisappear:(BOOL)animated {
+	[super viewWillDisappear:animated];
+	[fpsTimer invalidate];
+}
+
+- (void)updateFPS:(NSTimer*)timer {
+	struct timeval fpsTime;
+	gettimeofday(&fpsTime, NULL);
+	long int sec = fpsTime.tv_sec * 1000000 + fpsTime.tv_usec;
+	double t = (double)((sec) / 1000.0);
+	printf("%3.1f FPS\n", (float)frameCounter/(t - fpsTimeStamp)*1000);
+	frameCounter = 0;
+	fpsTimeStamp = t;
+}
+
 #pragma mark - dealloc
 
 - (void)dealloc {

@@ -152,6 +152,9 @@ double _tocp() {
 	}
 		
 	// setting preview layer
+	previewView = [[UIView alloc] initWithFrame:CGRectZero];
+	[previewView setAutoresizingMask:UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight];
+	
 	previewLayer = [AVCaptureVideoPreviewLayer layerWithSession:session];
 }
 
@@ -237,7 +240,8 @@ double _tocp() {
 	float height = self.view.frame.size.width * aspectRatio;
 	
 	previewLayer.frame = CGRectMake(0, 0, width, height);
-	[self.view.layer addSublayer:previewLayer];
+	[previewView.layer addSublayer:previewLayer];
+	[self.view addSubview:previewView];
 	[session startRunning];
 	
 	[self adjustCameraPreviewLayerOrientaion:self.interfaceOrientation];
@@ -297,6 +301,9 @@ double _tocp() {
 			
 			unsigned char* baseAddress = (unsigned char *)CVPixelBufferGetBaseAddress(imageBuffer);
 			
+			if (buffer == NULL)
+				buffer = (unsigned char*)malloc(sizeof(unsigned char) * width * height * 4);
+			
 			memcpy(buffer, baseAddress, sizeof(unsigned char) * width * height * 4);
 			CVPixelBufferUnlockBaseAddress(imageBuffer, 0);
 		}
@@ -313,6 +320,7 @@ double _tocp() {
 - (void)dealloc {
 	free(buffer);
 	[session release];
+	[previewView release];
     [super dealloc];
 }
 

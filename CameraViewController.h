@@ -67,6 +67,7 @@ typedef enum {
 	unsigned char					*buffer;
 	AVCaptureSession				*session;
 	AVCaptureVideoPreviewLayer		*previewLayer;
+	UIView							*previewView;
 	float							aspectRatio;
 	CameraViewControllerType		type;
 	id<CameraViewControllerDelegate>delegate;

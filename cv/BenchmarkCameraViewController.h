@@ -30,8 +30,16 @@
 
 #import "CameraViewController.h"
 
+#include <stdlib.h>
+#include <stdio.h>
+#include <sys/time.h>
+
 @interface BenchmarkCameraViewController : CameraViewController <CameraViewControllerDelegate> {
-	unsigned char *binarizedPixels;
+	unsigned char		*binarizedPixels;
+	UIImageView			*cameraImageView;
+	NSTimer				*fpsTimer;
+	int					frameCounter;
+	double				fpsTimeStamp;
 }
 
 @end
