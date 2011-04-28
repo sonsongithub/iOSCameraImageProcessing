@@ -69,6 +69,8 @@
 	[bar setItems:[NSArray arrayWithObject:closeButton]];
 	
 	[self setDelegate:self];
+	
+	[self startToMeasureFPS];
 }
 
 #pragma mark - CameraViewControllerDelegate

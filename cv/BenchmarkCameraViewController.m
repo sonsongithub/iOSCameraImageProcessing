@@ -32,8 +32,6 @@
 
 //#define _TEST_COLOR
 
-#define _FPS_INTERVAL 2
-
 #import "QuartzHelpLibrary.h"
 
 @implementation BenchmarkCameraViewController
@@ -141,9 +139,6 @@
 
 - (void)captureOutput:(AVCaptureOutput *)captureOutput didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer fromConnection:(AVCaptureConnection *)connection {
 	
-	printf("------------------------------------------------------------------------\n");
-	frameCounter++;
-	
 	NSAutoreleasePool *pool = nil;
 	if (![NSThread isMainThread])
 		pool = [NSAutoreleasePool new];
@@ -210,24 +205,10 @@
 	[self setDelegate:self];
 	
 	[self.view bringSubviewToFront:cameraImageView];
-	
-	fpsTimer = [NSTimer scheduledTimerWithTimeInterval:_FPS_INTERVAL target:self selector:@selector(updateFPS:) userInfo:nil repeats:YES];
-
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
 	[super viewWillDisappear:animated];
-	[fpsTimer invalidate];
-}
-
-- (void)updateFPS:(NSTimer*)timer {
-	struct timeval fpsTime;
-	gettimeofday(&fpsTime, NULL);
-	long int sec = fpsTime.tv_sec * 1000000 + fpsTime.tv_usec;
-	double t = (double)((sec) / 1000.0);
-	printf("%3.1f FPS\n", (float)frameCounter/(t - fpsTimeStamp)*1000);
-	frameCounter = 0;
-	fpsTimeStamp = t;
 }
 
 #pragma mark - dealloc

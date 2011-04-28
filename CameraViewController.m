@@ -30,6 +30,8 @@
 
 #import "CameraViewController.h"
 
+#define _FPS_INTERVAL 2
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <sys/time.h>
@@ -61,6 +63,20 @@ double _tocp() {
 @synthesize delegate, bufferSize;
 
 #pragma mark - Instance method
+
+- (void)startToMeasureFPS {
+	fpsTimer = [NSTimer scheduledTimerWithTimeInterval:_FPS_INTERVAL target:self selector:@selector(updateFPS:) userInfo:nil repeats:YES];
+}
+
+- (void)updateFPS:(NSTimer*)timer {
+	struct timeval fpsTime;
+	gettimeofday(&fpsTime, NULL);
+	long int sec = fpsTime.tv_sec * 1000000 + fpsTime.tv_usec;
+	double t = (double)((sec) / 1000.0);
+	printf("%3.1f FPS\n", (float)frameCounter/(t - fpsTimeStamp)*1000);
+	frameCounter = 0;
+	fpsTimeStamp = t;
+}
 
 - (void)prepareWithCameraViewControllerType:(CameraViewControllerType)value {
 	//
@@ -250,6 +266,7 @@ double _tocp() {
 - (void)viewWillDisappear:(BOOL)animated {
 	[super viewWillDisappear:animated];
 	[self waitForSessionStopRunning];
+	[fpsTimer invalidate];
 }
 
 #pragma mark - To support orientaion
@@ -267,6 +284,8 @@ double _tocp() {
 #pragma mark - AVCaptureVideoDataOutputSampleBufferDelegate
 
 - (void)captureOutput:(AVCaptureOutput *)captureOutput didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer fromConnection:(AVCaptureConnection *)connection {
+	frameCounter++;
+	
 	NSAutoreleasePool *pool = nil;
 	if (![NSThread isMainThread])
 		pool = [NSAutoreleasePool new];

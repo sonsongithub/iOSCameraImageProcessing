@@ -71,8 +71,14 @@ typedef enum {
 	float							aspectRatio;
 	CameraViewControllerType		type;
 	id<CameraViewControllerDelegate>delegate;
+	
+	// for mesasure frame per second
+	NSTimer							*fpsTimer;
+	int								frameCounter;
+	double							fpsTimeStamp;
 }
 - (id)initWithCameraViewControllerType:(CameraViewControllerType)value;
+- (void)startToMeasureFPS;
 @property (nonatomic, readonly) CGSize bufferSize;
 @property (nonatomic, assign) id <CameraViewControllerDelegate> delegate;
 @end

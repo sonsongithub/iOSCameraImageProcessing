@@ -37,9 +37,6 @@
 @interface BenchmarkCameraViewController : CameraViewController <CameraViewControllerDelegate> {
 	unsigned char		*binarizedPixels;
 	UIImageView			*cameraImageView;
-	NSTimer				*fpsTimer;
-	int					frameCounter;
-	double				fpsTimeStamp;
 }
 
 @end
