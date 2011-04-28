@@ -1,6 +1,6 @@
 /*
  * Real time image processing framework for iOS
- * MyCameraViewController.m
+ * BinarizedCameraViewController.m
  *
  * Copyright (c) Yuichi YOSHIDA, 11/04/20
  * All rights reserved.
@@ -28,10 +28,10 @@
  * HE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#import "MyCameraViewController.h"
+#import "BinarizedCameraViewController.h"
 #import "QuartzHelpLibrary.h"
 
-@implementation MyCameraViewController
+@implementation BinarizedCameraViewController
 
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];

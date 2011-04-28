@@ -1,6 +1,6 @@
 /*
  * Real time image processing framework for iOS
- * MyCameraViewController.h
+ * BinarizedCameraViewController.h
  *
  * Copyright (c) Yuichi YOSHIDA, 11/04/20
  * All rights reserved.
@@ -30,7 +30,7 @@
 
 #import "CameraViewController.h"
 
-@interface MyCameraViewController : CameraViewController <CameraViewControllerDelegate> {
+@interface BinarizedCameraViewController : CameraViewController <CameraViewControllerDelegate> {
 	UIImageView *binarizedImageView;
 	unsigned char *binarizedPixels;
 }

@@ -17,7 +17,7 @@
 		14311BFD1361788700C0C593 /* cvViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14311BFC1361788700C0C593 /* cvViewController.m */; };
 		14311C001361788700C0C593 /* cvViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 14311BFE1361788700C0C593 /* cvViewController.xib */; };
 		14311C1D13617C2300C0C593 /* MainWindow-iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 14311C1B13617C2300C0C593 /* MainWindow-iPad.xib */; };
-		1443574013650BBF004CC7AA /* MyCameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1443573F13650BBF004CC7AA /* MyCameraViewController.m */; };
+		1443574013650BBF004CC7AA /* BinarizedCameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1443573F13650BBF004CC7AA /* BinarizedCameraViewController.m */; };
 		1489D1621369001800C061B7 /* CameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1489D1611369001800C061B7 /* CameraViewController.m */; };
 		14975FC613653CBA00F41B08 /* QuartzHelpLibrary.m in Sources */ = {isa = PBXBuildFile; fileRef = 14975FC313653CBA00F41B08 /* QuartzHelpLibrary.m */; };
 		14975FC713653CBA00F41B08 /* UIImage+pixel.m in Sources */ = {isa = PBXBuildFile; fileRef = 14975FC513653CBA00F41B08 /* UIImage+pixel.m */; };
@@ -50,8 +50,8 @@
 		14311BFC1361788700C0C593 /* cvViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = cvViewController.m; sourceTree = "<group>"; };
 		14311BFF1361788700C0C593 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/cvViewController.xib; sourceTree = "<group>"; };
 		14311C1C13617C2300C0C593 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = "en.lproj/MainWindow-iPad.xib"; sourceTree = "<group>"; };
-		1443573E13650BBF004CC7AA /* MyCameraViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyCameraViewController.h; sourceTree = "<group>"; };
-		1443573F13650BBF004CC7AA /* MyCameraViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyCameraViewController.m; sourceTree = "<group>"; };
+		1443573E13650BBF004CC7AA /* BinarizedCameraViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; path = BinarizedCameraViewController.h; sourceTree = "<group>"; };
+		1443573F13650BBF004CC7AA /* BinarizedCameraViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BinarizedCameraViewController.m; sourceTree = "<group>"; };
 		1489D1601369001800C061B7 /* CameraViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraViewController.h; sourceTree = SOURCE_ROOT; };
 		1489D1611369001800C061B7 /* CameraViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CameraViewController.m; sourceTree = SOURCE_ROOT; };
 		14975FC213653CBA00F41B08 /* QuartzHelpLibrary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QuartzHelpLibrary.h; path = "../../Quartz-Help-Library/QuartzHelpLibrary.h"; sourceTree = "<group>"; };
@@ -156,8 +156,8 @@
 		1489D1631369002F00C061B7 /* Test ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				1443573E13650BBF004CC7AA /* MyCameraViewController.h */,
-				1443573F13650BBF004CC7AA /* MyCameraViewController.m */,
+				1443573E13650BBF004CC7AA /* BinarizedCameraViewController.h */,
+				1443573F13650BBF004CC7AA /* BinarizedCameraViewController.m */,
 			);
 			name = "Test ViewControllers";
 			sourceTree = "<group>";
@@ -267,7 +267,7 @@
 				14311BF41361788700C0C593 /* main.m in Sources */,
 				14311BF71361788700C0C593 /* cvAppDelegate.m in Sources */,
 				14311BFD1361788700C0C593 /* cvViewController.m in Sources */,
-				1443574013650BBF004CC7AA /* MyCameraViewController.m in Sources */,
+				1443574013650BBF004CC7AA /* BinarizedCameraViewController.m in Sources */,
 				14975FC613653CBA00F41B08 /* QuartzHelpLibrary.m in Sources */,
 				14975FC713653CBA00F41B08 /* UIImage+pixel.m in Sources */,
 				1489D1621369001800C061B7 /* CameraViewController.m in Sources */,
