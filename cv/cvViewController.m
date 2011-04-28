@@ -30,11 +30,15 @@
 
 #import "cvViewController.h"
 
+#import "NormalCameraViewController.h"
 #import "BinarizedCameraViewController.h"
 
 @implementation cvViewController
 
 - (IBAction)openCameraViewController:(id)sender {
+	NormalCameraViewController *controller = [[NormalCameraViewController alloc] initWithCameraViewControllerType:BufferGrayColor|BufferSize640x480];
+	[self presentModalViewController:controller animated:YES];
+	[controller release];
 }
 
 - (IBAction)openBinarizedViewController:(id)sender {
