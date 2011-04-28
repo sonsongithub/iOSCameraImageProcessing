@@ -1,6 +1,6 @@
 /*
  * Real time image processing framework for iOS
- * cvViewController.m
+ * BenchmarkCameraViewController.h
  *
  * Copyright (c) Yuichi YOSHIDA, 11/04/20
  * All rights reserved.
@@ -28,30 +28,10 @@
  * HE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#import "cvViewController.h"
+#import "CameraViewController.h"
 
-#import "NormalCameraViewController.h"
-#import "BinarizedCameraViewController.h"
-#import "BenchmarkCameraViewController.h"
-
-@implementation cvViewController
-
-- (IBAction)openCameraViewController:(id)sender {
-	NormalCameraViewController *controller = [[NormalCameraViewController alloc] initWithCameraViewControllerType:BufferGrayColor|BufferSize640x480];
-	[self presentModalViewController:controller animated:YES];
-	[controller release];
-}
-
-- (IBAction)openBinarizedViewController:(id)sender {
-	BinarizedCameraViewController *controller = [[BinarizedCameraViewController alloc] initWithCameraViewControllerType:BufferGrayColor|BufferSize640x480];
-	[self presentModalViewController:controller animated:YES];
-	[controller release];
-}
-
-- (IBAction)openBenchmarkViewController:(id)sender {
-	BenchmarkCameraViewController *controller = [[BenchmarkCameraViewController alloc] init];
-	[self presentModalViewController:controller animated:YES];
-	[controller release];
+@interface BenchmarkCameraViewController : CameraViewController <CameraViewControllerDelegate> {
+	unsigned char *binarizedPixels;
 }
 
 @end

@@ -1,6 +1,6 @@
 /*
  * Real time image processing framework for iOS
- * cvViewController.m
+ * BenchmarkCameraViewController.m
  *
  * Copyright (c) Yuichi YOSHIDA, 11/04/20
  * All rights reserved.
@@ -28,30 +28,60 @@
  * HE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#import "cvViewController.h"
-
-#import "NormalCameraViewController.h"
-#import "BinarizedCameraViewController.h"
 #import "BenchmarkCameraViewController.h"
 
-@implementation cvViewController
+@implementation BenchmarkCameraViewController
 
-- (IBAction)openCameraViewController:(id)sender {
-	NormalCameraViewController *controller = [[NormalCameraViewController alloc] initWithCameraViewControllerType:BufferGrayColor|BufferSize640x480];
-	[self presentModalViewController:controller animated:YES];
-	[controller release];
+#pragma mark - Instance method
+
+- (void)close:(id)sender {
+	[self dismissModalViewControllerAnimated:YES];
 }
 
-- (IBAction)openBinarizedViewController:(id)sender {
-	BinarizedCameraViewController *controller = [[BinarizedCameraViewController alloc] initWithCameraViewControllerType:BufferGrayColor|BufferSize640x480];
-	[self presentModalViewController:controller animated:YES];
-	[controller release];
+#pragma mark - Override
+
+- (id)init {
+    self = [super initWithCameraViewControllerType:BufferGrayColor|BufferSize640x480];
+    if (self) {
+		binarizedPixels = (unsigned char*)malloc(sizeof(unsigned char) * (int)self.bufferSize.width * (int)self.bufferSize.height);
+    }
+    return self;
 }
 
-- (IBAction)openBenchmarkViewController:(id)sender {
-	BenchmarkCameraViewController *controller = [[BenchmarkCameraViewController alloc] init];
-	[self presentModalViewController:controller animated:YES];
-	[controller release];
+#pragma mark - CameraViewControllerDelegate
+
+- (void)didUpdateBufferCameraViewController:(CameraViewController*)CameraViewController {
+	
+	int width = self.bufferSize.height;
+	int height = self.bufferSize.width;
+	int threshold = 120;
+	for (int y = 0; y < height; y++) {
+		for (int x = 0; x < width; x++) {
+			binarizedPixels[y * width + x] = buffer[y * width + x] > threshold ? 255 : 0;
+		}
+	}
+}
+
+#pragma mark - Life cycle
+
+- (void)viewWillAppear:(BOOL)animated {
+	[super viewWillAppear:animated];
+	
+	// add toolbar
+	UIToolbar *bar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 44, self.view.frame.size.width, 44)];
+	[self.view addSubview:bar];
+	[bar release];
+	
+	UIBarButtonItem *closeButton = [[[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Close", nil) style:UIBarButtonItemStyleBordered target:self action:@selector(close:)] autorelease];
+	[bar setItems:[NSArray arrayWithObject:closeButton]];
+	
+	[self setDelegate:self];
+}
+#pragma mark - dealloc
+
+- (void)dealloc {
+    free(binarizedPixels);
+    [super dealloc];
 }
 
 @end

@@ -33,11 +33,26 @@
 
 @implementation BinarizedCameraViewController
 
+#pragma mark - Instane method
+
+- (void)close:(id)sender {
+	[self dismissModalViewControllerAnimated:YES];
+}
+
+#pragma mark - Override
+
+- (id)initWithCameraViewControllerType:(CameraViewControllerType)value {
+    self = [super initWithCameraViewControllerType:value];
+	if (self) {
+		binarizedPixels = (unsigned char*)malloc(sizeof(unsigned char) * (int)self.bufferSize.width * (int)self.bufferSize.height);
+	}
+	return self;
+}
+
+#pragma mark - Life cycle
+
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
-	
-	// alloc buffer
-	binarizedPixels = (unsigned char*)malloc(sizeof(unsigned char) * (int)self.bufferSize.width * (int)self.bufferSize.height);
 	
 	// fit to view
 	float ratio = self.bufferSize.width / self.bufferSize.height;
@@ -55,6 +70,8 @@
 	
 	[self setDelegate:self];
 }
+
+#pragma mark - CameraViewControllerDelegate
 
 - (void)didUpdateBufferCameraViewController:(CameraViewController*)CameraViewController {
 	// Rotate pixel array in order to display it on this view controller's view.
@@ -84,9 +101,7 @@
 	CGImageRelease(imageRef);
 }
 
-- (void)close:(id)sender {
-	[self dismissModalViewControllerAnimated:YES];
-}
+#pragma mark - dealloc
 
 - (void)dealloc {
     free(binarizedPixels);

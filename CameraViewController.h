@@ -39,18 +39,24 @@ double _toc();
 double _tocp();				// with printf
 
 typedef enum {
-	BufferTypeMask	= 0x0f,
-	BufferGrayColor	= 0,
-	BufferRGBColor	= 1,
+	BufferTypeMask				= 0x0f,
+	BufferGrayColor				= 0,
+	BufferRGBColor				= 1,
 }CameraViewControllerType;
 
 typedef enum {
-	BufferSizeMask		= 0xf0,
-	BufferSize1280x720	= 0 << 4,
-	BufferSize640x480	= 1 << 4,
-	BufferSize480x360	= 2 << 4,
-	BufferSize192x144	= 3 << 4,
+	BufferSizeMask				= 0xf0,
+	BufferSize1280x720			= 0 << 4,
+	BufferSize640x480			= 1 << 4,
+	BufferSize480x360			= 2 << 4,
+	BufferSize192x144			= 3 << 4,
 }CameraViewControllerSize;
+
+typedef enum {
+	MultiThreadingMask			= 0x100,
+	NotSupportMultiThreading	= 0 << 5,
+	SupportMultiThreading		= 1 << 5,
+}CameraViewControllerMultiThreading;
 
 @class CameraViewController;
 
