@@ -308,6 +308,7 @@ double _tocp() {
 #pragma mark - dealloc
 
 - (void)dealloc {
+	[self waitForSessionStopRunning];
 	free(buffer);
 	[session release];
     [super dealloc];
