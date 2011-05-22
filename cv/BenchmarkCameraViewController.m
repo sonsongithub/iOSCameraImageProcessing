@@ -80,7 +80,7 @@
 	
 	_tic();
 	// Make CGImage from pixel array, with Quartz Help Library
-	CGImageRef imageRef = CGImageGrayColorCreateWithGrayPixelBuffer(binarizedPixels, width, height);
+	CGImageRef imageRef = CGImageCreateWithPixelBuffer(binarizedPixels, width, height, 1, QH_PIXEL_GRAYSCALE);
 	_tocp();
 	
 	_tic();
@@ -113,7 +113,7 @@
 	
 	_tic();
 	// Make CGImage from pixel array, with Quartz Help Library
-	CGImageRef imageRef = CGImageGrayColorCreateWithGrayPixelBuffer(binarizedPixels, width, height);
+	CGImageRef imageRef = CGImageCreateWithPixelBuffer(binarizedPixels, width, height, 1, QH_PIXEL_GRAYSCALE);
 	_tocp();
 	
 	_tic();

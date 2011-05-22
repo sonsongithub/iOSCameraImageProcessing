@@ -22,7 +22,6 @@
 		1489D169136903E500C061B7 /* NormalCameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1489D168136903E500C061B7 /* NormalCameraViewController.m */; };
 		1489D16C1369068400C061B7 /* BenchmarkCameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1489D16B1369068400C061B7 /* BenchmarkCameraViewController.m */; };
 		14975FC613653CBA00F41B08 /* QuartzHelpLibrary.m in Sources */ = {isa = PBXBuildFile; fileRef = 14975FC313653CBA00F41B08 /* QuartzHelpLibrary.m */; };
-		14975FC713653CBA00F41B08 /* UIImage+pixel.m in Sources */ = {isa = PBXBuildFile; fileRef = 14975FC513653CBA00F41B08 /* UIImage+pixel.m */; };
 		14B377941365BD6200738C9C /* icon114x114.png in Resources */ = {isa = PBXBuildFile; fileRef = 14B377911365BD6200738C9C /* icon114x114.png */; };
 		14B377951365BD6200738C9C /* icon57x57.png in Resources */ = {isa = PBXBuildFile; fileRef = 14B377921365BD6200738C9C /* icon57x57.png */; };
 		14B377961365BD6200738C9C /* icon72x72.png in Resources */ = {isa = PBXBuildFile; fileRef = 14B377931365BD6200738C9C /* icon72x72.png */; };
@@ -62,8 +61,6 @@
 		1489D16B1369068400C061B7 /* BenchmarkCameraViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BenchmarkCameraViewController.m; sourceTree = "<group>"; };
 		14975FC213653CBA00F41B08 /* QuartzHelpLibrary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = QuartzHelpLibrary.h; path = "../../Quartz-Help-Library/QuartzHelpLibrary.h"; sourceTree = "<group>"; };
 		14975FC313653CBA00F41B08 /* QuartzHelpLibrary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = QuartzHelpLibrary.m; path = "../../Quartz-Help-Library/QuartzHelpLibrary.m"; sourceTree = "<group>"; };
-		14975FC413653CBA00F41B08 /* UIImage+pixel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+pixel.h"; path = "../../Quartz-Help-Library/UIImage+pixel.h"; sourceTree = "<group>"; };
-		14975FC513653CBA00F41B08 /* UIImage+pixel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIImage+pixel.m"; path = "../../Quartz-Help-Library/UIImage+pixel.m"; sourceTree = "<group>"; };
 		14B377911365BD6200738C9C /* icon114x114.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon114x114.png; sourceTree = "<group>"; };
 		14B377921365BD6200738C9C /* icon57x57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon57x57.png; sourceTree = "<group>"; };
 		14B377931365BD6200738C9C /* icon72x72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon72x72.png; sourceTree = "<group>"; };
@@ -177,8 +174,6 @@
 			children = (
 				14975FC213653CBA00F41B08 /* QuartzHelpLibrary.h */,
 				14975FC313653CBA00F41B08 /* QuartzHelpLibrary.m */,
-				14975FC413653CBA00F41B08 /* UIImage+pixel.h */,
-				14975FC513653CBA00F41B08 /* UIImage+pixel.m */,
 			);
 			name = "Quartz Help Library";
 			path = cv;
@@ -279,7 +274,6 @@
 				14311BFD1361788700C0C593 /* cvViewController.m in Sources */,
 				1443574013650BBF004CC7AA /* BinarizedCameraViewController.m in Sources */,
 				14975FC613653CBA00F41B08 /* QuartzHelpLibrary.m in Sources */,
-				14975FC713653CBA00F41B08 /* UIImage+pixel.m in Sources */,
 				1489D1621369001800C061B7 /* CameraViewController.m in Sources */,
 				1489D169136903E500C061B7 /* NormalCameraViewController.m in Sources */,
 				1489D16C1369068400C061B7 /* BenchmarkCameraViewController.m in Sources */,

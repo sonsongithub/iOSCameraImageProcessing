@@ -87,7 +87,7 @@
 	}
 	
 	// Make CGImage from pixel array, with Quartz Help Library
-	CGImageRef imageRef = CGImageGrayColorCreateWithGrayPixelBuffer(binarizedPixels, width, height);
+	CGImageRef imageRef = CGImageCreateWithPixelBuffer(binarizedPixels, width, height, 1, QH_PIXEL_GRAYSCALE);
 	
 	// Have to update UIImageView with CGImageRef on main-thread.
 	if (![NSThread isMainThread]) {
