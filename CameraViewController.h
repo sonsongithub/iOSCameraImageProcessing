@@ -76,6 +76,7 @@ typedef enum {
 	NSTimer							*fpsTimer;
 	int								frameCounter;
 	double							fpsTimeStamp;
+	BOOL							canRotate;
 }
 - (id)initWithCameraViewControllerType:(CameraViewControllerType)value;
 - (void)startToMeasureFPS;

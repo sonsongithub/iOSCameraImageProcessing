@@ -36,6 +36,10 @@
 
 @implementation cvViewController
 
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
+	return YES;
+}
+
 - (IBAction)openCameraViewController:(id)sender {
 	NormalCameraViewController *controller = [[NormalCameraViewController alloc] initWithCameraViewControllerType:BufferGrayColor|BufferSize640x480];
 	[self presentModalViewController:controller animated:YES];

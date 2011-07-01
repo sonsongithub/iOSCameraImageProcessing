@@ -168,8 +168,8 @@ double _tocp() {
 	}
 		
 	// setting preview layer
-	previewView = [[UIView alloc] initWithFrame:CGRectZero];
-	[previewView setAutoresizingMask:UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight];
+	previewView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 1024, 1024)];
+	[previewView setAutoresizingMask:UIViewAutoresizingNone];
 	
 	previewLayer = [AVCaptureVideoPreviewLayer layerWithSession:session];
 }
@@ -184,36 +184,22 @@ double _tocp() {
 }
 
 - (void)adjustCameraPreviewLayerOrientaion:(UIInterfaceOrientation)orientation {
-	CATransform3D m;
-	CGRect f = previewLayer.frame;
-	
-	float offsetx = (f.size.height - f.size.width)/2;
-	float offsety = (f.size.width - f.size.height)/2;
-	
 	switch(orientation) {
 		case UIInterfaceOrientationLandscapeLeft:
-			m = CATransform3DMakeTranslation(offsetx, offsety, 0);
-			m = CATransform3DRotate(m, M_PI/2, 0, 0, 1);
+			previewView.transform = CGAffineTransformMakeRotation(M_PI_2);
 			break;
 		case UIInterfaceOrientationLandscapeRight:
-			m = CATransform3DMakeTranslation(offsetx, offsety, 0);
-			m = CATransform3DRotate(m, 3 * M_PI/2, 0, 0, 1);
+			previewView.transform = CGAffineTransformMakeRotation(M_PI_2);
 			break;
 		case UIInterfaceOrientationPortrait:
-			m = CATransform3DMakeTranslation(0, -2, 0);
-			m = CATransform3DRotate(m, 0, 0, 0, 1);
+			previewView.transform = CGAffineTransformMakeRotation(0);
 			break;
 		case UIInterfaceOrientationPortraitUpsideDown:
-			m = CATransform3DMakeTranslation(0, -2, 0);
-			m = CATransform3DRotate(m, M_PI, 0, 0, 1);
+			previewView.transform = CGAffineTransformMakeRotation(0);
 			break;
 		default:
-			m = CATransform3DMakeTranslation(0, -2, 0);
-			m = CATransform3DRotate(m, 0, 0, 0, 1);
 			break;
 	}
-	
-	previewLayer.transform = m;
 }
 
 - (void)waitForSessionStopRunning {
@@ -251,7 +237,7 @@ double _tocp() {
 
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
-	
+
 	float width = self.view.frame.size.width;
 	float height = self.view.frame.size.width * aspectRatio;
 	
@@ -261,6 +247,8 @@ double _tocp() {
 	[session startRunning];
 	
 	[self adjustCameraPreviewLayerOrientaion:self.interfaceOrientation];
+	
+	canRotate = YES;
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -276,9 +264,9 @@ double _tocp() {
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-	return (interfaceOrientation == UIInterfaceOrientationPortrait);
-	// for orientation test
-	//return YES;
+	// I can't understand the orienation behavior of view controllers.....
+	// Recommend that you don't overide this method... or please help me.
+	return canRotate;
 }
 
 #pragma mark - AVCaptureVideoDataOutputSampleBufferDelegate

@@ -35,12 +35,33 @@
 
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
+
+	CGRect frame;
+	switch(self.interfaceOrientation) {
+		case UIInterfaceOrientationLandscapeLeft:
+			frame = CGRectMake(0, self.view.frame.size.width - 44, self.view.frame.size.height, 44);
+			break;
+		case UIInterfaceOrientationLandscapeRight:
+			frame = CGRectMake(0, self.view.frame.size.width - 44, self.view.frame.size.height, 44);
+			break;
+		case UIInterfaceOrientationPortrait:
+			frame = CGRectMake(0, self.view.frame.size.height - 44, self.view.frame.size.width, 44);
+			break;
+		case UIInterfaceOrientationPortraitUpsideDown:
+			frame = CGRectMake(0, self.view.frame.size.height - 44, self.view.frame.size.width, 44);
+			break;
+		default:
+			frame = CGRectMake(0, self.view.frame.size.height - 44, self.view.frame.size.width, 44);
+			break;
+	}
 	
 	// add toolbar
-	UIToolbar *bar = [[UIToolbar alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 44, self.view.frame.size.width, 44)];
+	UIToolbar *bar = [[UIToolbar alloc] initWithFrame:frame];//CGRectMake(0, self.view.frame.size.height - 44, self.view.frame.size.width, 44)];
+	[bar setAutoresizingMask:UIViewAutoresizingFlexibleTopMargin|UIViewAutoresizingFlexibleWidth];
 	[self.view addSubview:bar];
 	[bar release];
 	
+	// add button
 	UIBarButtonItem *closeButton = [[[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Close", nil) style:UIBarButtonItemStyleBordered target:self action:@selector(close:)] autorelease];
 	[bar setItems:[NSArray arrayWithObject:closeButton]];
 }
