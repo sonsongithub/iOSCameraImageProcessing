@@ -38,6 +38,10 @@
 
 static struct timeval _start, _end;
 
+void _tic(void);
+double _toc(void);
+double _tocp(void);
+
 void _tic() {
 	gettimeofday(&_start, NULL);
 }
