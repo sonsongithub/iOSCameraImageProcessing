@@ -38,10 +38,6 @@
 
 static struct timeval _start, _end;
 
-void _tic(void);
-double _toc(void);
-double _tocp(void);
-
 void _tic() {
 	gettimeofday(&_start, NULL);
 }
@@ -178,7 +174,7 @@ double _tocp() {
 	previewLayer = [AVCaptureVideoPreviewLayer layerWithSession:session];
 }
 
-- (id)initWithCameraViewControllerType:(CameraViewControllerType)value {
+- (id)initWithCameraViewControllerType:(int)value {
     self = [super initWithNibName:nil bundle:nil];
 	if (self) {
         // Custom initialization

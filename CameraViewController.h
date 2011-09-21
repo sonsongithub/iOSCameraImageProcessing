@@ -32,9 +32,13 @@
 #import <AVFoundation/AVFoundation.h>
 #import <CoreGraphics/CoreGraphics.h>
 
-void _tic();				// not thread safe
-double _toc();
-double _tocp();				// with printf
+#ifdef __cplusplus
+extern "C" {
+#endif
+	
+void _tic(void);				// not thread safe
+double _toc(void);
+double _tocp(void);				// with printf
 
 typedef enum {
 	BufferTypeMask				= 0x0f,
@@ -55,6 +59,10 @@ typedef enum {
 	NotSupportMultiThreading	= 0 << 8,
 	SupportMultiThreading		= 1 << 8,
 }CameraViewControllerMultiThreading;
+
+#ifdef __cplusplus
+}
+#endif
 
 @class CameraViewController;
 
@@ -78,7 +86,7 @@ typedef enum {
 	double							fpsTimeStamp;
 	BOOL							canRotate;
 }
-- (id)initWithCameraViewControllerType:(CameraViewControllerType)value;
+- (id)initWithCameraViewControllerType:(int)value;
 - (void)startToMeasureFPS;
 @property (nonatomic, readonly) CGSize bufferSize;
 @property (nonatomic, assign) id <CameraViewControllerDelegate> delegate;
