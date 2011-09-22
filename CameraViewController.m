@@ -140,7 +140,6 @@ double _tocp() {
 	
 	AVCaptureVideoDataOutput * videoDataOutput = [[[AVCaptureVideoDataOutput alloc] init] autorelease];
 	[videoDataOutput setAlwaysDiscardsLateVideoFrames:YES];
-	[videoDataOutput setMinFrameDuration:CMTimeMake(1, 30)];
 	[videoDataOutput setVideoSettings:settingInfo];	
 
 	// support multi-threading
