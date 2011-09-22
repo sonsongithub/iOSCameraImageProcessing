@@ -248,7 +248,7 @@ double _tocp() {
 	
 	[self adjustCameraPreviewLayerOrientaion:self.interfaceOrientation];
 	
-	canRotate = YES;
+	canRotate = NO;
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -266,7 +266,9 @@ double _tocp() {
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
 	// I can't understand the orienation behavior of view controllers.....
 	// Recommend that you don't overide this method... or please help me.
-	return canRotate;
+	if (canRotate)
+		return YES;
+	return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
 #pragma mark - AVCaptureVideoDataOutputSampleBufferDelegate
