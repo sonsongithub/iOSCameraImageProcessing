@@ -40,13 +40,13 @@ void _tic(void);				// not thread safe
 double _toc(void);
 double _tocp(void);				// with printf
 
-typedef enum {
+typedef enum _CameraViewControllerType{
 	BufferTypeMask				= 0x0f,
 	BufferGrayColor				= 0,
 	BufferRGBColor				= 1,
 }CameraViewControllerType;
 
-typedef enum {
+typedef enum _CameraViewControllerSize{
 	BufferSizeMask				= 0xf0,
 	BufferSize1280x720			= 0 << 4,
 	BufferSize640x480			= 1 << 4,
@@ -54,7 +54,7 @@ typedef enum {
 	BufferSize192x144			= 3 << 4,
 }CameraViewControllerSize;
 
-typedef enum {
+typedef enum _CameraViewControllerMultiThreading{
 	MultiThreadingMask			= 0x100,
 	NotSupportMultiThreading	= 0 << 8,
 	SupportMultiThreading		= 1 << 8,
@@ -86,7 +86,7 @@ typedef enum {
 	double							fpsTimeStamp;
 	BOOL							canRotate;
 }
-- (id)initWithCameraViewControllerType:(int)value;
+- (id)initWithCameraViewControllerType:(CameraViewControllerType)value;
 - (void)startToMeasureFPS;
 @property (nonatomic, readonly) CGSize bufferSize;
 @property (nonatomic, assign) id <CameraViewControllerDelegate> delegate;

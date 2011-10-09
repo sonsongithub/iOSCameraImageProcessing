@@ -173,7 +173,7 @@ double _tocp() {
 	previewLayer = [AVCaptureVideoPreviewLayer layerWithSession:session];
 }
 
-- (id)initWithCameraViewControllerType:(int)value {
+- (id)initWithCameraViewControllerType:(CameraViewControllerType)value {
     self = [super initWithNibName:nil bundle:nil];
 	if (self) {
         // Custom initialization
